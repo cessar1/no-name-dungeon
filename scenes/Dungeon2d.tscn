@@ -1,0 +1,194 @@
+[gd_scene format=3 uid="uid://cv3yy3eeab1m6"]
+
+[ext_resource type="Script" uid="uid://n4bfq1lvjoid" path="res://scenes/combat.gd" id="1_jna4q"]
+[ext_resource type="Script" uid="uid://ecsv4vjwaypp" path="res://scenes/canvas_layer.gd" id="4_eix33"]
+[ext_resource type="Script" uid="uid://b4p5jvu186sgp" path="res://scenes/ui.gd" id="5_ma6es"]
+[ext_resource type="PackedScene" uid="uid://w736uvaupdr2" path="res://scenes/skill_slot.tscn" id="6_4dye5"]
+[ext_resource type="Texture2D" uid="uid://y8ntbwlom84i" path="res://assets/ui/UI.png" id="6_qgjji"]
+[ext_resource type="PackedScene" uid="uid://csrf2t245whyx" path="res://BattleScene.tscn" id="8_4dye5"]
+
+[sub_resource type="Shortcut" id="Shortcut_qgjji"]
+
+[sub_resource type="Environment" id="Environment_qgjji"]
+glow_enabled = true
+
+[node name="Dungeon" type="Node2D" unique_id=1312457013]
+editor_description = "Otro nodo mas
+"
+script = ExtResource("1_jna4q")
+
+[node name="Polygon2D" type="Polygon2D" parent="." unique_id=664520396]
+color = Color(0.4189243, 0.34005883, 0.17711389, 1)
+polygon = PackedVector2Array(241, 253, 65, 748, 1333, 748, 1158, 270)
+
+[node name="Polygon2D2" type="Polygon2D" parent="." unique_id=2094640206]
+color = Color(0.46276408, 0.38060835, 0.12858772, 1)
+polygon = PackedVector2Array(248, 253, 241, -107, 1144, -105, 1156, 268)
+
+[node name="Polygon2D4" type="Polygon2D" parent="." unique_id=451825928]
+color = Color(0.5304004, 0.43658862, 0.1540856, 1)
+polygon = PackedVector2Array(241, 265, 236, -105, 12, 496, 60, 762)
+
+[node name="Polygon2D5" type="Polygon2D" parent="." unique_id=1468589377]
+position = Vector2(1094, 14)
+color = Color(0.3367404, 0.27470723, 0.082379855, 1)
+polygon = PackedVector2Array(64, 256, 59, -107, 267, 577, 241, 746)
+
+[node name="Polygon2D3" type="Polygon2D" parent="." unique_id=1981455477]
+color = Color(0.1836439, 0.0873299, 0.00682547, 1)
+polygon = PackedVector2Array(359, 255, 470, 21, 701, -30, 958, 21, 1048, 262, 909, 283, 685, 286, 508, 283)
+
+[node name="BattleScene" parent="." unique_id=1083053936 instance=ExtResource("8_4dye5")]
+
+[node name="Player" parent="BattleScene/Units" parent_id_path=PackedInt32Array(1083053936, 2145206129) index="0" unique_id=1712237594]
+position = Vector2(529, 444)
+
+[node name="Enemy" parent="BattleScene/Units" parent_id_path=PackedInt32Array(1083053936, 2145206129) index="1" unique_id=1275946992]
+position = Vector2(988, 565)
+
+[node name="Label" parent="BattleScene/Units/Enemy/VBoxContainer" parent_id_path=PackedInt32Array(1083053936, 1275946992, 1586302011) index="0" unique_id=330976262]
+metadata/_edit_use_anchors_ = true
+
+[node name="Enemy2" parent="BattleScene/Units" parent_id_path=PackedInt32Array(1083053936, 2145206129) index="2" unique_id=1795524719]
+position = Vector2(908, 387)
+
+[node name="Label" parent="BattleScene/Units/Enemy2/VBoxContainer" parent_id_path=PackedInt32Array(1083053936, 1795524719, 1586302011) index="0" unique_id=330976262]
+metadata/_edit_use_anchors_ = true
+
+[node name="Enemy3" parent="BattleScene/Units" parent_id_path=PackedInt32Array(1083053936, 2145206129) index="3" unique_id=772942830]
+position = Vector2(1101, 410)
+
+[node name="Label" parent="BattleScene/Units/Enemy3/VBoxContainer" parent_id_path=PackedInt32Array(1083053936, 772942830, 1586302011) index="0" unique_id=330976262]
+metadata/_edit_use_anchors_ = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=380967142]
+script = ExtResource("4_eix33")
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="CanvasLayer" unique_id=159158971]
+offset_left = 50.0
+offset_top = 50.0
+offset_right = 406.0
+offset_bottom = 75.0
+value = 50.0
+nine_patch_stretch = true
+texture_progress = ExtResource("6_qgjji")
+tint_progress = Color(1, 0, 0, 1)
+
+[node name="PLayerHpLabel" type="Label" parent="CanvasLayer" unique_id=808384527]
+offset_left = 52.0
+offset_top = 23.0
+offset_right = 84.0
+offset_bottom = 46.0
+
+[node name="UI" type="CanvasLayer" parent="." unique_id=906476221]
+layer = 4
+script = ExtResource("5_ma6es")
+
+[node name="ScoreLabel" type="Label" parent="UI" unique_id=1868079946]
+offset_left = 150.0
+offset_top = 723.0
+offset_right = 244.0
+offset_bottom = 746.0
+text = "Turn: Player"
+
+[node name="Label2" type="Label" parent="UI" unique_id=257865074]
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Turn: Player"
+
+[node name="Control" type="Control" parent="UI" unique_id=1910606177]
+layout_mode = 3
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -40.0
+offset_right = 20.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="Panel" type="Panel" parent="UI/Control" unique_id=90608856]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -227.0
+offset_top = -44.0
+offset_right = 230.0
+offset_bottom = 44.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BoxContainer" type="BoxContainer" parent="UI/Control" unique_id=913072990]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -221.0
+offset_top = -44.0
+offset_right = 227.0
+offset_bottom = 44.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 2
+size_flags_vertical = 4
+
+[node name="SkillSlot" parent="UI/Control/BoxContainer" unique_id=1025914088 instance=ExtResource("6_4dye5")]
+layout_mode = 2
+skill_name = "normal_attack"
+
+[node name="Attack" parent="UI/Control/BoxContainer/SkillSlot" index="0" unique_id=1735542032]
+shortcut = SubResource("Shortcut_qgjji")
+
+[node name="SkillSlot2" parent="UI/Control/BoxContainer" unique_id=1152827639 instance=ExtResource("6_4dye5")]
+layout_mode = 2
+skill_name = "magic_attack"
+
+[node name="SkillSlot3" parent="UI/Control/BoxContainer" unique_id=1637796793 instance=ExtResource("6_4dye5")]
+layout_mode = 2
+skill_name = "verga"
+
+[node name="MarginContainer" type="MarginContainer" parent="UI" unique_id=1729733643]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 0
+mouse_filter = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 50
+
+[node name="Control" type="Control" parent="UI/MarginContainer" unique_id=307271027]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="EnemyTimer" type="Timer" parent="." unique_id=1136590725]
+autostart = true
+
+[node name="EnemyContainer" type="Node2D" parent="." unique_id=244925933]
+
+[node name="EnemySpawnPosition" type="Marker2D" parent="." unique_id=100002898]
+position = Vector2(658, 400)
+
+[node name="TurnTimer" type="Timer" parent="." unique_id=1196658747]
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=313520003]
+position = Vector2(698, 346)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=564369594]
+environment = SubResource("Environment_qgjji")
+
+[connection signal="timeout" from="TurnTimer" to="." method="_on_turn_timer_timeout"]
+
+[editable path="BattleScene"]
+[editable path="BattleScene/Units/Enemy"]
+[editable path="BattleScene/Units/Enemy2"]
+[editable path="BattleScene/Units/Enemy3"]
+[editable path="UI/Control/BoxContainer/SkillSlot"]

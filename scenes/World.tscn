@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://bxx1diybpku6m"]
+
+[ext_resource type="Script" uid="uid://d0ogx3snr6h0u" path="res://World.gd" id="1_kqs1s"]
+[ext_resource type="PackedScene" uid="uid://blsoxd12u4h7s" path="res://scenes/building_project.tscn" id="2_7g83o"]
+[ext_resource type="PackedScene" uid="uid://cefc7x6vf057l" path="res://scenes/Villager.tscn" id="3_1lgw5"]
+
+[node name="World" type="Node2D" unique_id=849199481]
+script = ExtResource("1_kqs1s")
+building_project_scene = ExtResource("2_7g83o")
+adventurer = ExtResource("3_1lgw5")
+
+[node name="Buildings" type="Node2D" parent="." unique_id=835076375]
+
+[node name="Adventurers" type="Node2D" parent="." unique_id=493073543]
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=268800376]
+
+[node name="UI" type="CanvasLayer" parent="." unique_id=933743531]
+
+[node name="SpawnPoint" type="Marker2D" parent="." unique_id=1393291930]
+position = Vector2(578, 189)
+
+[node name="SpawnTimer" type="Timer" parent="." unique_id=1392012818]
+
+[connection signal="timeout" from="SpawnTimer" to="." method="_on_spawn_timer_timeout"]

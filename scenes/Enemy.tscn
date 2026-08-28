@@ -1,0 +1,232 @@
+[gd_scene format=3 uid="uid://v20bhgsk4vig"]
+
+[ext_resource type="Texture2D" uid="uid://xk8j5k1yc5jo" path="res://assets/Elfo.png" id="1_3gvst"]
+[ext_resource type="Script" uid="uid://8klg6ot5wtdv" path="res://scenes/enemy.gd" id="1_55jtl"]
+[ext_resource type="Script" uid="uid://ga6bbcgdkqns" path="res://stat.gd" id="2_mpr68"]
+[ext_resource type="Texture2D" uid="uid://y8ntbwlom84i" path="res://assets/ui/UI.png" id="5_1vja8"]
+[ext_resource type="Texture2D" uid="uid://db64dcpm8goh7" path="res://assets/particula.png" id="5_5wwv6"]
+
+[sub_resource type="Resource" id="Resource_ft8do"]
+script = ExtResource("2_mpr68")
+accuracy = 50.0
+metadata/_custom_type_script = "uid://ga6bbcgdkqns"
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_55jtl"]
+radius = 32.0
+
+[sub_resource type="Animation" id="Animation_55jtl"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Miss:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Miss:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_mpr68"]
+resource_name = "hurt"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.06666667, 0.23333333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [Color(1, 0, 0, 1), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_5wwv6"]
+resource_name = "miss"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Miss:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Miss:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.5),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_ft8do"]
+resource_name = "walk"
+length = 0.3
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, -3)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ft8do"]
+_data = {
+&"RESET": SubResource("Animation_55jtl"),
+&"hurt": SubResource("Animation_mpr68"),
+&"miss": SubResource("Animation_5wwv6"),
+&"walk": SubResource("Animation_ft8do")
+}
+
+[sub_resource type="LabelSettings" id="LabelSettings_mpr68"]
+font_size = 24
+font_color = Color(0.8043826, 0.25503087, 0.2003023, 1)
+outline_size = 7
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_1vja8"]
+font_size = 24
+font_color = Color(0.4595, 0.31, 1, 1)
+outline_size = 7
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_1vja8"]
+particle_flag_disable_z = true
+emission_shape = 6
+emission_ring_axis = Vector3(0, 0, 1)
+emission_ring_height = 0.0
+emission_ring_radius = 70.0
+emission_ring_inner_radius = 60.0
+emission_ring_cone_angle = 90.0
+orbit_velocity_min = 0.1300001
+orbit_velocity_max = 0.1300001
+gravity = Vector3(0, 0, 0)
+scale_min = 0.099999994
+scale_max = 0.25
+
+[node name="Enemy" type="Area2D" unique_id=861286592]
+collision_layer = 2
+collision_mask = 0
+script = ExtResource("1_55jtl")
+_faction = 1
+stats = SubResource("Resource_ft8do")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1648842147]
+z_index = 1
+scale = Vector2(1, 1.062955)
+texture = ExtResource("1_3gvst")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1948799523]
+position = Vector2(0, 8)
+shape = SubResource("CircleShape2D_55jtl")
+
+[node name="Timer" type="Timer" parent="." unique_id=643830320]
+wait_time = 2.5
+autostart = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1644725920]
+libraries/ = SubResource("AnimationLibrary_ft8do")
+
+[node name="Miss" type="Label" parent="." unique_id=1883886050]
+modulate = Color(1, 1, 1, 0)
+offset_left = -24.0
+offset_top = -184.0
+offset_right = 28.0
+offset_bottom = -150.0
+text = "Miss"
+label_settings = SubResource("LabelSettings_mpr68")
+
+[node name="Damage" type="Label" parent="." unique_id=1218109929]
+modulate = Color(1, 1, 1, 0)
+offset_left = -24.0
+offset_top = -184.0
+offset_right = 28.0
+offset_bottom = -150.0
+text = "Miss"
+label_settings = SubResource("LabelSettings_1vja8")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="." unique_id=310923608]
+position = Vector2(0, 32)
+scale = Vector2(1, 0.45)
+emitting = false
+amount = 80
+texture = ExtResource("5_5wwv6")
+lifetime = 0.5
+process_material = SubResource("ParticleProcessMaterial_1vja8")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1586302011]
+offset_left = -56.0
+offset_top = -96.0
+offset_right = 56.0
+offset_bottom = -56.0
+
+[node name="Label" type="Label" parent="VBoxContainer" unique_id=330976262]
+layout_mode = 2
+text = "Bartolito (100)"
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="VBoxContainer" unique_id=715224888]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+value = 100.0
+nine_patch_stretch = true
+texture_progress = ExtResource("5_1vja8")
+tint_progress = Color(1, 0, 0, 1)
+
+[connection signal="input_event" from="." to="." method="_on_input_event"]

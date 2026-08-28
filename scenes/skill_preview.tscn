@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://vwnubkygtf0k"]
+
+[ext_resource type="Script" uid="uid://ctp2vcbqa5bij" path="res://skill_preview.gd" id="1_6m6pi"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_tvijp"]
+
+[node name="SkillPreview" type="Area2D" unique_id=1008527092]
+z_index = -1
+collision_layer = 4
+collision_mask = 2
+script = ExtResource("1_6m6pi")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1729527263]
+shape = SubResource("CircleShape2D_tvijp")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]

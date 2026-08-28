@@ -1,0 +1,42 @@
+[gd_scene format=3 uid="uid://w736uvaupdr2"]
+
+[ext_resource type="Script" uid="uid://jw2gng2wav8v" path="res://scenes/skill_slot.gd" id="1_kq4tq"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1v1rp"]
+
+[sub_resource type="InputEventKey" id="InputEventKey_kq4tq"]
+device = -1
+keycode = 4194332
+
+[sub_resource type="Shortcut" id="Shortcut_23qt0"]
+events = [SubResource("InputEventKey_kq4tq")]
+
+[node name="SkillSlot" type="Control" unique_id=1025914088]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 3
+anchors_preset = 0
+size_flags_horizontal = 4
+script = ExtResource("1_kq4tq")
+skill_name = null
+metadata/_edit_use_anchors_ = true
+
+[node name="Attack" type="Button" parent="." unique_id=1735542032]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -60.0
+offset_top = -60.0
+offset_right = 60.0
+offset_bottom = 60.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 8
+theme_override_styles/normal = SubResource("StyleBoxEmpty_1v1rp")
+shortcut = SubResource("Shortcut_23qt0")
+text = "Attack"
+
+[connection signal="pressed" from="Attack" to="." method="_on_attack_pressed"]
