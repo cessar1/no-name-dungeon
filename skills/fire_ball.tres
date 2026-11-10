@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="Skill" format=3 uid="uid://be3lj82qkabp7"]
+
+[ext_resource type="Script" uid="uid://ds8gp267qcau6" path="res://skill.gd" id="1_76wok"]
+[ext_resource type="Texture2D" uid="uid://sxt0bd44bmak" path="res://assets/ui/FireBallSlot.png" id="2_ncltu"]
+
+[resource]
+script = ExtResource("1_76wok")
+skill_name = "Fireball"
+requires_target = true
+damage = 12
+energy_cost = 5
+texture = ExtResource("2_ncltu")
+metadata/_custom_type_script = "uid://ds8gp267qcau6"

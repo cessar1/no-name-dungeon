@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://bxmlctp3uln4v"]
+
+[ext_resource type="Texture2D" uid="uid://db64dcpm8goh7" path="res://assets/particula.png" id="1_pg1lx"]
+
+[sub_resource type="Gradient" id="Gradient_pg1lx"]
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_mwdgi"]
+gradient = SubResource("Gradient_pg1lx")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_1vja8"]
+particle_flag_disable_z = true
+emission_shape = 6
+emission_ring_axis = Vector3(0, 0, 1)
+emission_ring_height = 0.0
+emission_ring_radius = 70.0
+emission_ring_inner_radius = 60.0
+emission_ring_cone_angle = 90.0
+orbit_velocity_min = 0.1300001
+orbit_velocity_max = 0.1300001
+gravity = Vector3(0, 0, 0)
+scale_min = 0.099999994
+scale_max = 0.25
+color = Color(1, 0, 0, 1)
+color_ramp = SubResource("GradientTexture1D_mwdgi")
+
+[node name="SelectionRing" type="GPUParticles2D" unique_id=326993976]
+scale = Vector2(1, 0.45)
+emitting = false
+amount = 80
+texture = ExtResource("1_pg1lx")
+lifetime = 0.5
+process_material = SubResource("ParticleProcessMaterial_1vja8")

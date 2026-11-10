@@ -2,13 +2,14 @@
 
 [ext_resource type="Texture2D" uid="uid://xk8j5k1yc5jo" path="res://assets/Elfo.png" id="1_3gvst"]
 [ext_resource type="Script" uid="uid://8klg6ot5wtdv" path="res://scenes/enemy.gd" id="1_55jtl"]
+[ext_resource type="Script" uid="uid://ds8gp267qcau6" path="res://skill.gd" id="2_iwav8"]
 [ext_resource type="Script" uid="uid://ga6bbcgdkqns" path="res://stat.gd" id="2_mpr68"]
+[ext_resource type="Resource" uid="uid://d354slifjy7sw" path="res://skills/basic_attack.tres" id="3_1i2q2"]
+[ext_resource type="PackedScene" uid="uid://bxmlctp3uln4v" path="res://scenes/selection_ring.tscn" id="4_5wwv6"]
 [ext_resource type="Texture2D" uid="uid://y8ntbwlom84i" path="res://assets/ui/UI.png" id="5_1vja8"]
-[ext_resource type="Texture2D" uid="uid://db64dcpm8goh7" path="res://assets/particula.png" id="5_5wwv6"]
 
-[sub_resource type="Resource" id="Resource_ft8do"]
+[sub_resource type="Resource" id="Resource_iwav8"]
 script = ExtResource("2_mpr68")
-accuracy = 50.0
 metadata/_custom_type_script = "uid://ga6bbcgdkqns"
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_55jtl"]
@@ -63,6 +64,34 @@ tracks/3/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Color(1, 1, 1, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Sprite2D:scale")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_iwav8"]
+resource_name = "die"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1e-05, 1e-05)]
 }
 
 [sub_resource type="Animation" id="Animation_mpr68"]
@@ -130,6 +159,7 @@ tracks/0/keys = {
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ft8do"]
 _data = {
 &"RESET": SubResource("Animation_55jtl"),
+&"die": SubResource("Animation_iwav8"),
 &"hurt": SubResource("Animation_mpr68"),
 &"miss": SubResource("Animation_5wwv6"),
 &"walk": SubResource("Animation_ft8do")
@@ -147,30 +177,15 @@ font_color = Color(0.4595, 0.31, 1, 1)
 outline_size = 7
 outline_color = Color(0, 0, 0, 1)
 
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_1vja8"]
-particle_flag_disable_z = true
-emission_shape = 6
-emission_ring_axis = Vector3(0, 0, 1)
-emission_ring_height = 0.0
-emission_ring_radius = 70.0
-emission_ring_inner_radius = 60.0
-emission_ring_cone_angle = 90.0
-orbit_velocity_min = 0.1300001
-orbit_velocity_max = 0.1300001
-gravity = Vector3(0, 0, 0)
-scale_min = 0.099999994
-scale_max = 0.25
-
 [node name="Enemy" type="Area2D" unique_id=861286592]
 collision_layer = 2
 collision_mask = 0
 script = ExtResource("1_55jtl")
-_faction = 1
-stats = SubResource("Resource_ft8do")
+skills = Array[ExtResource("2_iwav8")]([ExtResource("3_1i2q2")])
+stats = SubResource("Resource_iwav8")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1648842147]
 z_index = 1
-scale = Vector2(1, 1.062955)
 texture = ExtResource("1_3gvst")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1948799523]
@@ -186,11 +201,11 @@ libraries/ = SubResource("AnimationLibrary_ft8do")
 
 [node name="Miss" type="Label" parent="." unique_id=1883886050]
 modulate = Color(1, 1, 1, 0)
-offset_left = -24.0
-offset_top = -184.0
-offset_right = 28.0
-offset_bottom = -150.0
-text = "Miss"
+offset_left = -56.0
+offset_top = -136.0
+offset_right = 63.0
+offset_bottom = -102.0
+text = "ASDASDas"
 label_settings = SubResource("LabelSettings_mpr68")
 
 [node name="Damage" type="Label" parent="." unique_id=1218109929]
@@ -199,17 +214,10 @@ offset_left = -24.0
 offset_top = -184.0
 offset_right = 28.0
 offset_bottom = -150.0
-text = "Miss"
 label_settings = SubResource("LabelSettings_1vja8")
 
-[node name="GPUParticles2D" type="GPUParticles2D" parent="." unique_id=310923608]
+[node name="SelectionRing" parent="." unique_id=326993976 instance=ExtResource("4_5wwv6")]
 position = Vector2(0, 32)
-scale = Vector2(1, 0.45)
-emitting = false
-amount = 80
-texture = ExtResource("5_5wwv6")
-lifetime = 0.5
-process_material = SubResource("ParticleProcessMaterial_1vja8")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1586302011]
 offset_left = -56.0
@@ -229,4 +237,5 @@ nine_patch_stretch = true
 texture_progress = ExtResource("5_1vja8")
 tint_progress = Color(1, 0, 0, 1)
 
-[connection signal="input_event" from="." to="." method="_on_input_event"]
+[node name="LabelPosition" type="Marker2D" parent="." unique_id=1383833167]
+position = Vector2(0, -64)

@@ -1,0 +1,132 @@
+[gd_scene format=3 uid="uid://cv3yy3eeab1m6"]
+
+[ext_resource type="Script" uid="uid://n4bfq1lvjoid" path="res://scenes/combat.gd" id="1_aug50"]
+[ext_resource type="Script" uid="uid://1d1wi7t72sa2" path="res://scenes/battle_manager.gd" id="2_kiw3p"]
+[ext_resource type="Script" uid="uid://ecsv4vjwaypp" path="res://scenes/canvas_layer.gd" id="3_400sg"]
+[ext_resource type="PackedScene" uid="uid://cf5ta08ptvv24" path="res://scenes/character_status.tscn" id="5_kiw3p"]
+[ext_resource type="Script" uid="uid://b4p5jvu186sgp" path="res://scenes/ui.gd" id="5_qy1jj"]
+[ext_resource type="PackedScene" uid="uid://bhxf07p4na0gn" path="res://scenes/skill_bar.tscn" id="6_aug50"]
+
+[sub_resource type="Environment" id="Environment_qgjji"]
+glow_enabled = true
+
+[node name="Game" type="Node2D" unique_id=1312457013]
+editor_description = "Otro nodo mas
+"
+script = ExtResource("1_aug50")
+
+[node name="BattleManager" type="Node" parent="." unique_id=1355079614]
+script = ExtResource("2_kiw3p")
+
+[node name="Background" type="Node2D" parent="." unique_id=983589241]
+
+[node name="Polygon2D3" type="Polygon2D" parent="Background" unique_id=1981455477]
+position = Vector2(285, 24.999992)
+scale = Vector2(0.8181818, 0.7082613)
+color = Color(0.18549998, 0.27049166, 0.35, 1)
+polygon = PackedVector2Array(-449.77774, -158.34586, 1379.8889, -255.78949, 1329.7778, 266.61655, -496.22217, 236.84212)
+
+[node name="Polygon2D6" type="Polygon2D" parent="Background" unique_id=889755163]
+position = Vector2(970, -685)
+color = Color(0.30935434, 0.39287066, 0.5088639, 1)
+polygon = PackedVector2Array(369, 341, 413, 11, 1699, -14, 1689, 337)
+
+[node name="Polygon2D13" type="Polygon2D" parent="Background" unique_id=1777899984]
+position = Vector2(-1706, -64)
+scale = Vector2(1.885813, 1)
+color = Color(0.33333334, 0.37254903, 0.41568628, 1)
+polygon = PackedVector2Array(822, 276, 894.04407, -240, 1621.0515, -268, 1669.8369, 265, 1528.7837, 252, 1500.1488, 303, 1465.1506, 303, 1387.7305, 307, 1359.6259, 280, 1360.6864, 140, 1338.9451, -8, 1274.2515, -66, 1205.846, -25, 1153.879, 63, 1146.9855, 250, 950.2533, 372)
+
+[node name="Polygon2D" type="Polygon2D" parent="Background" unique_id=664520396]
+position = Vector2(63, 46)
+scale = Vector2(1, 0.68458974)
+color = Color(0.35541186, 0.30861956, 0.21556184, 1)
+polygon = PackedVector2Array(-55, 232.06345, -61, 496.7613, 1282, 502.6042, 1276, 222.3429)
+
+[node name="Polygon2D2" type="Polygon2D" parent="Background" unique_id=780569962]
+position = Vector2(61, 136)
+scale = Vector2(1, 1.0982121)
+color = Color(0.23470712, 0.20100096, 0.13351816, 1)
+polygon = PackedVector2Array(-55, 232.06345, -61, 496.7613, 610.33496, 499.682, 1282, 502.6042, 1276, 222.3429)
+
+[node name="Polygon2D14" type="Polygon2D" parent="Background" unique_id=1728764029]
+position = Vector2(-1991.0001, -391)
+scale = Vector2(1.885813, 1)
+color = Color(0.39011794, 0.43311545, 0.4804377, 1)
+polygon = PackedVector2Array(822, 276, 846, 87, 884, -1, 869.6515, -152, 962.9799, -284, 1107.2148, -437, 1420.6074, -435, 1624.2332, -323, 1765.2864, -109, 1808.2388, 226, 1777.4828, 401, 1712.7892, 476, 1654.459, 419, 1657.1104, 316, 1692.1084, 194, 1679.9121, 28, 1619.4607, -51, 1556.8882, -29, 1473.1047, -205, 1273.1909, -203, 1232.8901, -152, 1225.9965, -40, 1178.2717, 48, 1157.0607, 247, 1129.4865, 299, 1089.7157, 324, 1028.2039, 286, 936.4662, 350)
+
+[node name="Units" type="Node2D" parent="." unique_id=1600966619]
+
+[node name="Positions" type="Node2D" parent="." unique_id=1636073797]
+
+[node name="0" type="Marker2D" parent="Positions" unique_id=876635874]
+position = Vector2(397, 453)
+
+[node name="1" type="Marker2D" parent="Positions" unique_id=51362748]
+position = Vector2(832, 384)
+
+[node name="2" type="Marker2D" parent="Positions" unique_id=2009951323]
+position = Vector2(960, 384)
+
+[node name="3" type="Marker2D" parent="Positions" unique_id=1242161503]
+position = Vector2(768, 512)
+
+[node name="4" type="Marker2D" parent="Positions" unique_id=1823534403]
+position = Vector2(640, 384)
+
+[node name="5" type="Marker2D" parent="Positions" unique_id=816968049]
+position = Vector2(1088, 384)
+
+[node name="6" type="Marker2D" parent="Positions" unique_id=1341168952]
+position = Vector2(896, 256)
+
+[node name="7" type="Marker2D" parent="Positions" unique_id=1157184585]
+position = Vector2(896, 512)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=380967142]
+script = ExtResource("3_400sg")
+
+[node name="PLayerHpLabel" type="Label" parent="CanvasLayer" unique_id=808384527]
+offset_left = 86.0
+offset_top = 135.0
+offset_right = 118.0
+offset_bottom = 158.0
+
+[node name="CharacterStatus" parent="CanvasLayer" unique_id=564773432 instance=ExtResource("5_kiw3p")]
+unique_name_in_owner = true
+
+[node name="UI" type="CanvasLayer" parent="." unique_id=906476221]
+layer = 4
+script = ExtResource("5_qy1jj")
+
+[node name="ScoreLabel" type="Label" parent="UI" unique_id=1868079946]
+offset_right = 94.0
+offset_bottom = 23.0
+text = "Turn: Player"
+
+[node name="SkillBar" parent="UI" unique_id=282932663 instance=ExtResource("6_aug50")]
+unique_name_in_owner = true
+visible = false
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 0.0
+grow_vertical = 0
+
+[node name="Control" type="Control" parent="UI" unique_id=1910606177]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+metadata/_edit_lock_ = true
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=313520003]
+position = Vector2(698, 346)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=564369594]
+environment = SubResource("Environment_qgjji")

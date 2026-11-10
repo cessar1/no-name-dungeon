@@ -1,24 +1,18 @@
 class_name Skill_slot extends Control
 
-@export var skill_name : String
+var skill_name : String
+signal skill_selected(skill : Skill)
+var skill : Skill
 
-func _ready() -> void:
-	#$Attack.disabled = false
-	BattleManager.turn_started.connect(_on_turn_started)
-	BattleManager.battle_ended.connect(_on_battle_ended)
-	print(skill_name)
+func setup(skill_data : Skill):
+	skill = skill_data
+	skill_name = skill.skill_name
+	name = skill.skill_name
+	#$SkillButton.text = skill.skill_name
+	$Icon.texture = skill.texture
+
+func _on_skill_button_pressed() -> void:
+	skill_selected.emit(skill)
 	
-func _on_turn_started(unit: BattleUnit):
-	print("unit.name")
-	$Attack.disabled = not (unit is Player)
-
-func _on_battle_ended():
-
-	$Attack.disabled = true
-	
-func _on_attack_pressed() -> void:
-	print(skill_name)
-	GameManager.skill_selected.emit(skill_name)
-
-func disable_skill_slots(value : bool):
-	$Attack.disabled = value
+func set_available(value : bool):
+	$SkillButton.disabled = not value

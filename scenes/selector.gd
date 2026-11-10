@@ -15,7 +15,7 @@ func _on_body_shape_entered(body_rid: RID, body: Node2D, body_shape_index: int, 
 
 func select_enemy(enemy):
 	GameManager.enemy_selected.emit(enemy)
-	print("Enemigo seleccionado", enemy)
+	#print("Enemigo seleccionado", enemy)
 
 # A este enemigo se le hará daño desde la funcion attack en el nodo Player
 # Se instancia el selector y este envia la señal de a que enemigo hay que aplicarle el daño

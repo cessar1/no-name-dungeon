@@ -3,10 +3,16 @@
 [ext_resource type="Script" uid="uid://dx41srdxcmg3o" path="res://Player.gd" id="1_v6fml"]
 [ext_resource type="Texture2D" uid="uid://xk8j5k1yc5jo" path="res://assets/Elfo.png" id="2_3li8b"]
 [ext_resource type="Script" uid="uid://ga6bbcgdkqns" path="res://stat.gd" id="2_mdl7e"]
+[ext_resource type="Script" uid="uid://ds8gp267qcau6" path="res://skill.gd" id="2_qu4a1"]
+[ext_resource type="Resource" uid="uid://d354slifjy7sw" path="res://skills/basic_attack.tres" id="3_70d11"]
+[ext_resource type="Resource" uid="uid://be3lj82qkabp7" path="res://skills/fire_ball.tres" id="4_khinc"]
+[ext_resource type="Resource" uid="uid://dssm5qfrb5ogo" path="res://skills/wind_strike.tres" id="5_bruh7"]
+[ext_resource type="PackedScene" uid="uid://bxmlctp3uln4v" path="res://scenes/selection_ring.tscn" id="6_70d11"]
+[ext_resource type="AudioStream" uid="uid://c8grdv35jtf32" path="res://assets/sounds/mixkit-fast-blow-2144.wav" id="9_bruh7"]
 
-[sub_resource type="Resource" id="Resource_qu4a1"]
+[sub_resource type="Resource" id="Resource_3qm1d"]
 script = ExtResource("2_mdl7e")
-accuracy = 150.0
+energy = 5.0
 metadata/_custom_type_script = "uid://ga6bbcgdkqns"
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qjc21"]
@@ -72,9 +78,31 @@ font_color = Color(0.4595, 0.31, 1, 1)
 outline_size = 7
 outline_color = Color(0, 0, 0, 1)
 
+[sub_resource type="Gradient" id="Gradient_pg1lx"]
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_mwdgi"]
+gradient = SubResource("Gradient_pg1lx")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_cw2d6"]
+particle_flag_disable_z = true
+emission_shape = 6
+emission_ring_axis = Vector3(0, 0, 1)
+emission_ring_height = 0.0
+emission_ring_radius = 70.0
+emission_ring_inner_radius = 60.0
+emission_ring_cone_angle = 90.0
+orbit_velocity_min = 0.1300001
+orbit_velocity_max = 0.1300001
+gravity = Vector3(0, 0, 0)
+scale_min = 0.099999994
+scale_max = 0.25
+color = Color(0.56794053, 0.99999994, 0.59301406, 1)
+color_ramp = SubResource("GradientTexture1D_mwdgi")
+
 [node name="Player" type="Area2D" unique_id=1750749856]
 script = ExtResource("1_v6fml")
-stats = SubResource("Resource_qu4a1")
+skills = Array[ExtResource("2_qu4a1")]([ExtResource("3_70d11"), ExtResource("4_khinc"), ExtResource("5_bruh7")])
+stats = SubResource("Resource_3qm1d")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1275386052]
 position = Vector2(-2, -4)
@@ -82,18 +110,34 @@ shape = SubResource("RectangleShape2D_qjc21")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=354965366]
 modulate = Color(0.1682, 0.58, 0.573137, 1)
+z_index = 2
 texture = ExtResource("2_3li8b")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=841638965]
 libraries/ = SubResource("AnimationLibrary_mdl7e")
 
-[node name="Label" type="Label" parent="." unique_id=442906671]
-offset_right = 40.0
-offset_bottom = 23.0
-
 [node name="Miss" type="Label" parent="." unique_id=561583710]
-offset_left = -24.0
-offset_top = -184.0
-offset_right = 28.0
-offset_bottom = -150.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -0.5
+offset_top = -17.0
+offset_right = 0.5
+offset_bottom = 17.0
+grow_horizontal = 2
+grow_vertical = 2
 label_settings = SubResource("LabelSettings_1vja8")
+
+[node name="SelectionRing" parent="." unique_id=326993976 instance=ExtResource("6_70d11")]
+position = Vector2(1, 25)
+process_material = SubResource("ParticleProcessMaterial_cw2d6")
+
+[node name="LabelPosition" type="Marker2D" parent="." unique_id=631519407]
+position = Vector2(0, -64)
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=173822943]
+stream = ExtResource("9_bruh7")
+
+[connection signal="input_event" from="." to="." method="_on_input_event"]

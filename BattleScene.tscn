@@ -1,32 +1,41 @@
 [gd_scene format=3 uid="uid://csrf2t245whyx"]
 
 [ext_resource type="Script" uid="uid://sihqoqyouyqe" path="res://battle_scene.gd" id="1_hvnqj"]
-[ext_resource type="PackedScene" uid="uid://dk2am3jyyv5ye" path="res://scenes/Player.tscn" id="2_hvnqj"]
-[ext_resource type="PackedScene" uid="uid://v20bhgsk4vig" path="res://scenes/Enemy.tscn" id="3_musxc"]
-[ext_resource type="Script" uid="uid://ga6bbcgdkqns" path="res://stat.gd" id="4_musxc"]
-
-[sub_resource type="Resource" id="Resource_bqhns"]
-script = ExtResource("4_musxc")
-metadata/_custom_type_script = "uid://ga6bbcgdkqns"
 
 [node name="BattleScene" type="Node2D" unique_id=1083053936]
 script = ExtResource("1_hvnqj")
 
-[node name="Units" type="Node2D" parent="." unique_id=2145206129]
+[node name="EnemyParty" type="Node2D" parent="." unique_id=170122450]
 
-[node name="Player" parent="Units" unique_id=1712237594 instance=ExtResource("2_hvnqj")]
-position = Vector2(384, 380)
-stats = SubResource("Resource_bqhns")
+[node name="PlayerParty" type="Node2D" parent="." unique_id=1499284166]
 
-[node name="Enemy" parent="Units" unique_id=1275946992 instance=ExtResource("3_musxc")]
-position = Vector2(896, 384)
+[node name="Positions" type="Node2D" parent="." unique_id=1592591395]
 
-[node name="Enemy2" parent="Units" unique_id=1795524719 instance=ExtResource("3_musxc")]
-position = Vector2(808, 384)
+[node name="0" type="Marker2D" parent="Positions" unique_id=272727711]
+position = Vector2(768, 256)
 
-[node name="Enemy3" parent="Units" unique_id=772942830 instance=ExtResource("3_musxc")]
-position = Vector2(716, 384)
+[node name="1" type="Marker2D" parent="Positions" unique_id=1634806150]
+position = Vector2(832, 384)
 
-[editable path="Units/Enemy"]
-[editable path="Units/Enemy2"]
-[editable path="Units/Enemy3"]
+[node name="2" type="Marker2D" parent="Positions" unique_id=1258263196]
+position = Vector2(960, 384)
+
+[node name="3" type="Marker2D" parent="Positions" unique_id=365549813]
+position = Vector2(768, 512)
+
+[node name="4" type="Marker2D" parent="Positions" unique_id=86144041]
+position = Vector2(640, 384)
+
+[node name="5" type="Marker2D" parent="Positions" unique_id=1234400777]
+position = Vector2(1088, 384)
+
+[node name="6" type="Marker2D" parent="Positions" unique_id=561326271]
+position = Vector2(896, 256)
+
+[node name="7" type="Marker2D" parent="Positions" unique_id=195397272]
+position = Vector2(896, 512)
+
+[node name="PlayerPositions" type="Node2D" parent="." unique_id=1094290070]
+
+[node name="0" type="Marker2D" parent="PlayerPositions" unique_id=666387555]
+position = Vector2(384, 384)
