@@ -42,7 +42,7 @@ Definir el nuevo flujo de turnos (seguir atacando hasta quedarse sin energía o 
 ## Notas de continuidad
 
 - Commits: `86346a3` (combate). El addon `godot-ai` y los docs (`AGENTS.md`, `MEMORY.md`, `task.md`) ya están versionados.
-- Siguen sin commitear solo los assets sin usar (`assets/Chars/`, `HealSlot.png`, `Panel.png`, `mixkit-hard-horror-hit-drum-565.wav`); el usuario los borra manualmente si no los usa.
+- Assets nuevos versionados: `assets/ui/HealSlot.png`, `assets/ui/Panel.png` y `assets/sounds/mixkit-hard-horror-hit-drum-565.wav`; aún no se usan en escenas. Si no se usan, el usuario los borra manualmente.
 - Reglas y convenciones: `AGENTS.md` (incluye la sección 11 de buenas prácticas de código).
 - Verificar ejecutando el juego desde el editor y leyendo la consola.
 - No hacer commits sin pedido explícito.
