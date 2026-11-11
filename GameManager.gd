@@ -23,4 +23,3 @@ signal enemy_selected(enemy: Enemy)
 func add_skill_points(value: int):
 	skill_points += value
 	skill_points_changed.emit(skill_points)
-	#print("nuevos puntos habilitados")

@@ -15,7 +15,6 @@ var actions_remaining: int = 0
 var enemies_to_act: Array[BattleUnit]
 
 var selected_player: BattleUnit
-#var selected_target: BattleUnit
 var skill_bar : SkillBar
 var current_turn : Turn
 
@@ -85,8 +84,6 @@ func change_turn():
 	if battle_over:
 		return
 
-	#print("ANTES DE CAMBIAR TURNO")
-	#print("active_enemies:", active_enemies.size())
 	if current_turn == Turn.PLAYER:
 		start_enemy_turn()
 	else:

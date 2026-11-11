@@ -29,7 +29,6 @@ func execute_action(active_players : Array[BattleUnit]):
 	var execution_time = skill.get_execution_time()
 	await get_tree().create_timer(execution_time).timeout
 	skill.execute(self, target)
-	#print(name, " acts")
 
 func choose_target(players : Array[BattleUnit]):
 	return players.pick_random()
@@ -47,7 +46,6 @@ func on_death():
 
 func get_reward():
 	var random_amount = randi_range(1,8)
-	#print(random_amount)
 	
 	GameManager.add_skill_points(random_amount)
 

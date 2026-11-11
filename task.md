@@ -54,9 +54,12 @@
 
 ## Limpieza
 
-- [ ] **Eliminar archivos que ya no estén en uso.**
+- [x] **Eliminar archivos que ya no estén en uso.**
   - Revisar uno a uno y preguntar siempre antes de borrar.
-  - Candidatos a revisar: `BattleScene.tscn`, `battle_scene.gd`, `TestSkelleton.tscn`, `scenes/selector.gd`.
+  - Eliminados: `BattleScene.tscn`, `battle_scene.gd`, `scenes/skill.tscn`, `scenes/selector.gd`, `scenes/World.tscn` y `scenes/Dungeon2d.tscn`.
+  - `TestSkelleton.tscn` ya no existe en disco.
+  - Limpiados bloques comentados y prints de debug en los scripts de combate.
+  - Pendiente (borrado manual): assets sin usar (`assets/Chars/`, `HealSlot.png`, `Panel.png`, `mixkit-hard-horror-hit-drum-565.wav`).
 
 - [ ] Eliminar `PLayerHpLabel` de `scenes/Game.tscn` (quedó sin uso).
 - [ ] Revisar los signals `GameManager.player_hp_changed` y `player_max_hp_changed`: no se emiten en ningún lado.

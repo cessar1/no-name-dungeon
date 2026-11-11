@@ -9,7 +9,6 @@ var is_single_target: bool = false
 signal target_selected(targets : Array[BattleUnit])
 
 func _ready() -> void:
-	#collision.shape.radius = radius
 	create_collision()
 	
 func _process(delta: float) -> void:
@@ -20,18 +19,6 @@ func _process(delta: float) -> void:
 			var targets = get_overlapping_areas()
 			target_selected.emit(targets)
 			queue_free()
-	
-#func _draw() -> void:
-	#draw_circle(Vector2.ZERO, radius, color, false )
-	#draw_arc(
-		#Vector2.ZERO,
-		#radius,
-		#0,
-		#TAU,
-		#64,
-		#color,
-		#3.0
-	#)
 
 
 func get_area_points() -> PackedVector2Array:
@@ -46,22 +33,6 @@ func get_area_points() -> PackedVector2Array:
 		))
 
 	return points
-	
-#func _draw() -> void:
-	#var points := get_area_points()
-#
-	#draw_polyline(
-		#points,
-		#color,
-		#3.0
-	#)
-#
-	#draw_line(
-		#points[points.size() - 1],
-		#points[0],
-		#color,
-		#1.0
-	#)
 
 func create_collision() -> void:
 	$CollisionShape2D.polygon = get_area_points()

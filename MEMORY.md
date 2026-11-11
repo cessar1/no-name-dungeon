@@ -32,7 +32,8 @@
 - `PLayerHpLabel` quedó sin uso en `Game.tscn`.
 - Cálculo de daño plano; `stats` (defence, accuracy, evasion, etc.) sin usar.
 - `SelectionManager` duplica la selección de `BattleManager` y no se usa fuera de su script.
-- Prints de debug y archivos legado (`BattleScene.tscn`, `battle_scene.gd`, `TestSkelleton.tscn`, `selector.gd`).
+- `GameManager.enemy_selected` quedó sin emisor tras eliminar `selector.gd`.
+- Código sin uso: `skill_preview.gd` (`collision`, `is_single_target`, `get_targets()`) y `enemy.gd::_on_input_event()`.
 
 ## Próximo paso recomendado
 
@@ -41,7 +42,7 @@ Definir el nuevo flujo de turnos (seguir atacando hasta quedarse sin energía o 
 ## Notas de continuidad
 
 - Commits: `86346a3` (combate). El addon `godot-ai` y los docs (`AGENTS.md`, `MEMORY.md`, `task.md`) ya están versionados.
-- Siguen sin commitear: eliminaciones de `World.tscn` / `Dungeon2d.tscn` y assets sin usar.
+- Siguen sin commitear solo los assets sin usar (`assets/Chars/`, `HealSlot.png`, `Panel.png`, `mixkit-hard-horror-hit-drum-565.wav`); el usuario los borra manualmente si no los usa.
 - Reglas y convenciones: `AGENTS.md` (incluye la sección 11 de buenas prácticas de código).
 - Verificar ejecutando el juego desde el editor y leyendo la consola.
 - No hacer commits sin pedido explícito.

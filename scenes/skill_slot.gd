@@ -8,7 +8,6 @@ func setup(skill_data : Skill):
 	skill = skill_data
 	skill_name = skill.skill_name
 	name = skill.skill_name
-	#$SkillButton.text = skill.skill_name
 	$Icon.texture = skill.texture
 
 func _on_skill_button_pressed() -> void:

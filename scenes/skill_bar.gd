@@ -17,7 +17,6 @@ func show_skills(unit: BattleUnit):
 		slot.skill_selected.connect(_on_skill_slot_selected)
 
 		slot.setup(skill)
-		#slot.name = "Pepe"
 		$MarginContainer/BoxContainer.add_child(slot)
 
 	refresh_availability(unit)

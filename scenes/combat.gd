@@ -37,7 +37,6 @@ func spawn_player() -> void:
 
 	units.add_child(player)
 
-	#connect_unit(player)
 	battle_manager.register_unit(player)
 
 
@@ -52,12 +51,8 @@ func spawn_enemy() -> void:
 
 	units.add_child(enemy)
 
-	#connect_unit(enemy)
 	battle_manager.register_unit(enemy)
 
-
-#func connect_unit(unit: BattleUnit) -> void:
-	#unit.unit_selected.connect(skill_bar._on_unit_selected)
 
 func get_random_available_position() -> Marker2D:
 	if available_positions.is_empty():
