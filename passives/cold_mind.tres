@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="PassiveSkill" format=3]
+
+[ext_resource type="Script" path="res://passive_skill.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+passive_name = "Mente fría"
+description = "Mantiene la calma bajo presión."
+cost = 3

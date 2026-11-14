@@ -29,6 +29,21 @@
   - `actions_remaining` no registra qué jugador actuó; con 2 jugadores se podría usar el mismo dos veces.
   - Mantener la barra de skills atada al jugador seleccionado.
 
+## Escena previa al combate
+
+- [ ] **Crear una escena de preparación antes del combate.**
+  - Punto de partida para acciones fuera de batalla: gastar skill points, comprar, etc.
+  - [x] Primer paso: `scenes/PreBattle.tscn` muestra los skill points y tiene un botón para iniciar `scenes/Game.tscn`.
+  - [x] Segundo paso: `PreBattle` muestra HP, energía y skills del jugador (solo lectura), tomados de `scenes/Player.tscn`.
+  - [x] Tercer paso: pasivas visuales en `PreBattle`. Catálogo en `passives/*.tres` (`PassiveSkill`) y estado en `GameManager` (`learned_passives`, `learn_passive()`). Aún no modifican stats.
+  - [x] Estado del jugador centralizado en `GameManager.player_state` (`PlayerState` con stats y skills); valores iniciales desde `stats/player_base.tres` y `STARTING_SKILLS`. `PreBattle` y el combate leen de ahí.
+  - [x] `combat.gd` inyecta `GameManager.player_state` en el `Player` y `Player.tscn` ya no define stats/skills (con respaldo para ejecutar la escena sola).
+  - [ ] Definir los efectos reales de las pasivas.
+  - Definir si se compra con skill points, oro u otra moneda, y qué se puede comprar.
+  - [x] Los datos persistentes entre escenas se guardan en `GameManager`.
+  - [x] Persistencia en `user://player_save.tres`: `PlayerState` (stats, skills, pasivas y skill points). Se guarda al sumar puntos o aprender pasivas; HP/energía actuales no persisten.
+  - [ ] Definir cómo se entra y se sale de la escena, y cómo se inicia el combate.
+
 ## Personajes y UI
 
 - [ ] **Vida visible de todos los personajes.**

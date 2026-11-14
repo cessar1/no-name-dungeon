@@ -33,6 +33,8 @@ func _on_battle_ended(player_won: bool) -> void:
 
 func spawn_player() -> void:
 	var player: BattleUnit = PLAYER_SCENE.instantiate()
+	player.stats = GameManager.player_state.stats
+	player.skills.assign(GameManager.player_state.skills)
 	player.global_position = positions[0].global_position
 
 	units.add_child(player)

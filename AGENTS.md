@@ -306,3 +306,25 @@ Si encontrás una oportunidad de mejora importante, explicala y proponela. No la
 - Prestá atención a procesos `_process()` y `_physics_process()` para no ejecutar trabajo innecesario cada frame.
 - Evitá búsquedas repetidas de nodos, cálculos o instanciaciones innecesarias dentro de procesos que se ejecutan continuamente.
 - Si una optimización agrega complejidad, justificá por qué es necesaria antes de implementarla.
+
+### 11.10 Creación de escenas y nodos
+
+**Priorizar la creación y configuración de escenas mediante el editor de Godot antes que construir estructuras de nodos programáticamente.**
+
+- Siempre que sea posible, creá las escenas, nodos, propiedades visuales y jerarquías desde el editor.
+- Utilizá scripts para definir el comportamiento y la lógica de los nodos, no para construir estructuras completas que podrían existir como escenas.
+- Preferí instanciar escenas reutilizables (`PackedScene`) antes que crear manualmente sus nodos mediante código.
+- Evitá utilizar `Node.new()`, `Control.new()`, `Sprite2D.new()` y similares para construir interfaces o estructuras complejas cuando puedan resolverse mediante escenas.
+- No generes interfaces completas mediante código si pueden diseñarse y mantenerse desde el editor.
+- Utilizá la creación programática cuando exista una necesidad real, como generación dinámica de elementos, estructuras variables en tiempo de ejecución o sistemas procedurales.
+- Si una escena necesita generar muchos elementos dinámicamente, evaluá crear una escena individual reutilizable y luego instanciarla mediante código.
+- Mantené separados el diseño visual de una escena y su comportamiento programático.
+
+**Antes de construir una estructura mediante código, evaluá si podría resolverse mejor mediante una escena reutilizable. Si existe una alternativa clara en el editor, preferila.**
+
+### 11.11 Componentes de UI
+
+- Todo componente de UI reutilizable debe incluir textos placeholder en sus nodos de texto.
+- El placeholder permite abrir la escena individualmente en el editor y ver cómo se ve sin depender de datos en tiempo de ejecución.
+- Usá textos representativos del contenido real (por ejemplo, un nombre y una descripción de ejemplo) en lugar de dejar los campos vacíos.
+- El script puede sobrescribir esos textos al inicializar el componente.

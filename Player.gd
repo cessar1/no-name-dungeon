@@ -2,6 +2,15 @@ class_name Player extends BattleUnit
 
 @onready var animator : AnimationPlayer = $AnimationPlayer
 
+func _ready() -> void:
+	# Respaldo para ejecutar la escena sola (F6): en combate, Game la configura
+	# con el estado global antes de agregarla al árbol.
+	if stats == null:
+		stats = GameManager.player_state.stats.duplicate(true)
+	if skills.is_empty():
+		skills.assign(GameManager.player_state.skills)
+	super._ready()
+
 func use_skill(skill: Skill, targets: Array[BattleUnit]) -> bool:
 	if not can_use_skill(skill):
 		return false

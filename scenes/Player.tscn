@@ -2,18 +2,8 @@
 
 [ext_resource type="Script" uid="uid://dx41srdxcmg3o" path="res://Player.gd" id="1_v6fml"]
 [ext_resource type="Texture2D" uid="uid://xk8j5k1yc5jo" path="res://assets/Elfo.png" id="2_3li8b"]
-[ext_resource type="Script" uid="uid://ga6bbcgdkqns" path="res://stat.gd" id="2_mdl7e"]
-[ext_resource type="Script" uid="uid://ds8gp267qcau6" path="res://skill.gd" id="2_qu4a1"]
-[ext_resource type="Resource" uid="uid://d354slifjy7sw" path="res://skills/basic_attack.tres" id="3_70d11"]
-[ext_resource type="Resource" uid="uid://be3lj82qkabp7" path="res://skills/fire_ball.tres" id="4_khinc"]
-[ext_resource type="Resource" uid="uid://dssm5qfrb5ogo" path="res://skills/wind_strike.tres" id="5_bruh7"]
 [ext_resource type="PackedScene" uid="uid://bxmlctp3uln4v" path="res://scenes/selection_ring.tscn" id="6_70d11"]
 [ext_resource type="AudioStream" uid="uid://c8grdv35jtf32" path="res://assets/sounds/mixkit-fast-blow-2144.wav" id="9_bruh7"]
-
-[sub_resource type="Resource" id="Resource_3qm1d"]
-script = ExtResource("2_mdl7e")
-energy = 5.0
-metadata/_custom_type_script = "uid://ga6bbcgdkqns"
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qjc21"]
 size = Vector2(65, 87)
@@ -101,8 +91,6 @@ color_ramp = SubResource("GradientTexture1D_mwdgi")
 
 [node name="Player" type="Area2D" unique_id=1750749856]
 script = ExtResource("1_v6fml")
-skills = Array[ExtResource("2_qu4a1")]([ExtResource("3_70d11"), ExtResource("4_khinc"), ExtResource("5_bruh7")])
-stats = SubResource("Resource_3qm1d")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1275386052]
 position = Vector2(-2, -4)
