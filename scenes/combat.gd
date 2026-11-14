@@ -1,32 +1,66 @@
-class_name Dungeon extends Node2D
+class_name Game
+extends Node2D
 
-var skill_preview_scene = preload("res://scenes/skill_preview.tscn")
-var skill_scene = preload("res://scenes/skill.tscn")
-var enemy_scene = preload("res://scenes/Enemy.tscn")
+const ENEMY_SCENE = preload("res://scenes/enemy.tscn")
+const PLAYER_SCENE = preload("res://scenes/Player.tscn")
+const RESULT_SCENE := "res://scenes/BattleResult.tscn"
 
-var skill_selected = null
-@export var max_enemy_count = 5
-var enemy_count = 0
+@onready var battle_manager = $BattleManager
+@onready var positions = $Positions.get_children()
+@onready var units: Node2D = $Units
+@onready var skill_bar: SkillBar = %SkillBar
 
-var skills = {
-	"normal_attack" : preload("res://scenes/skill.tscn"),
-	"magic_attack" : preload("res://scenes/skill.tscn")
-}
+var available_positions = []
 
-#func _ready() -> void:
-	#GameManager.skill_selected.connect(_on_skill_selected)
-	#GameManager.skill_preview_finished.connect(_on_skill_preview_finished)
 
-#func _on_skill_preview_finished(_position : Vector2):
-##	falta agregar skill data -> 
-	#var skill = skill_scene.instantiate()
-	#skill.position = _position
-	#add_child(skill)
+func _ready() -> void:
+	available_positions = positions.duplicate()
+	battle_manager.setup_ui(skill_bar)
+	battle_manager.battle_ended.connect(_on_battle_ended)
 
-	#
-#func skill_preview(name : String):
-	#var skill_preview = skill_preview_scene.instantiate()
-	#add_child(skill_preview)
-#
-#func _on_skill_selected(name : String):
-	#skill_preview(name) 
+	spawn_player()
+	spawn_enemy()
+	spawn_enemy()
+	battle_manager.start_battle()
+
+
+func _on_battle_ended(player_won: bool) -> void:
+	GameManager.last_battle_won = player_won
+	skill_bar.visible = false
+	battle_manager.clear_selection()
+	get_tree().change_scene_to_file(RESULT_SCENE)
+
+
+func spawn_player() -> void:
+	var player: BattleUnit = PLAYER_SCENE.instantiate()
+	player.stats = GameManager.player_state.stats
+	player.skills.assign(GameManager.player_state.skills)
+	player.global_position = positions[0].global_position
+
+	units.add_child(player)
+
+	battle_manager.register_unit(player)
+
+
+func spawn_enemy() -> void:
+	var position := get_random_available_position()
+
+	if position == null:
+		return
+
+	var enemy: BattleUnit = ENEMY_SCENE.instantiate()
+	enemy.global_position = position.global_position
+
+	units.add_child(enemy)
+
+	battle_manager.register_unit(enemy)
+
+
+func get_random_available_position() -> Marker2D:
+	if available_positions.is_empty():
+		return null
+
+	var position = available_positions.pick_random()
+	available_positions.erase(position)
+
+	return position

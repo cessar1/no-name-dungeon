@@ -1,8 +1,13 @@
-[gd_resource type="Resource" script_class="SkillData" format=3 uid="uid://dssm5qfrb5ogo"]
+[gd_resource type="Resource" script_class="Skill" format=3 uid="uid://dssm5qfrb5ogo"]
 
-[ext_resource type="Script" uid="uid://c40dwcdamejlj" path="res://skill_data.gd" id="1_oalws"]
+[ext_resource type="Script" uid="uid://ds8gp267qcau6" path="res://skill.gd" id="1_oalws"]
+[ext_resource type="Texture2D" uid="uid://bkokynw2du3lo" path="res://assets/ui/WindStrikeSlot.png" id="2_l608f"]
 
 [resource]
 script = ExtResource("1_oalws")
-id = 1
-metadata/_custom_type_script = "uid://c40dwcdamejlj"
+skill_name = "Wind Strike"
+requires_target = true
+damage = 100
+energy_cost = 5
+cooldown = 1
+texture = ExtResource("2_l608f")

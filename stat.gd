@@ -1,8 +1,8 @@
 class_name Stat extends Resource
 
-
+@export_category("General")
 @export var hp : float = 100.0
-@export var energy : float = 100.0
+@export var energy : float = 20.0
 @export var attack : float = 10.0
 @export var magic_attack : float = 1.0
 @export var defence : float = 50.0

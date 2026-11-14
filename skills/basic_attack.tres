@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="Skill" format=3 uid="uid://d354slifjy7sw"]
+
+[ext_resource type="Script" uid="uid://ds8gp267qcau6" path="res://skill.gd" id="1_pie0v"]
+[ext_resource type="Texture2D" uid="uid://ban7r36sc3ubq" path="res://assets/ui/AttackSlot.png" id="2_rst5n"]
+
+[resource]
+script = ExtResource("1_pie0v")
+skill_name = "Basic Attack"
+requires_target = true
+damage = 2
+energy_cost = 1
+texture = ExtResource("2_rst5n")
+execution_variation = 0.5
+metadata/_custom_type_script = "uid://ds8gp267qcau6"
