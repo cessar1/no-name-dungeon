@@ -70,6 +70,13 @@ Village es un RPG 2D para Godot 4.7 (Forward Plus) centrado en combate por turno
 - Mantener el comportamiento existente salvo que el cambio sea pedido.
 - Evitar `print()` de debug nuevos; si se agregan, quitarlos al terminar.
 
+### Flujo de ramas y pull requests
+
+- Trabajar cada cambio en su propia rama.
+- Abrir un pull request por rama y mergearlo a `main` una vez verificado.
+- Integrar a `main` de forma incremental: evitar acumular varias funcionalidades en una misma rama o PR.
+- Antes de empezar una tarea nueva, partir de `main` actualizado.
+
 ## 6. Comunicación
 
 - Explicaciones breves y directas, en castellano.
