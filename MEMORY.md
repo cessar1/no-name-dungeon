@@ -8,8 +8,8 @@
 ## Estado actual
 
 - Godot 4.7.2-stable, Forward Plus, viewport 1280x768.
-- Rama activa: `feature/pre-combat-scene`. `scenes/PreBattle.tscn` muestra skill points, HP/energía/skills desde `GameManager.player_state` y pasivas que se aprenden con puntos; botón a `Game.tscn`. Verificado en headless. La escena principal sigue siendo `Game.tscn`.
-- Escena principal: `res://scenes/Game.tscn`. Juego detenido.
+- Rama activa: `feature/pre-combat-scene`. `scenes/PreBattle.tscn` es la escena principal: muestra skill points, HP/energía/skills desde `GameManager.player_state` y pasivas que se aprenden con puntos; botón a `Game.tscn`. Verificado en headless.
+- Escena principal: `res://scenes/PreBattle.tscn`. Juego detenido.
 - Editor: addon `godot-ai` conectado, pero en esta sesión sus herramientas MCP no están expuestas al agente; verificar con Godot headless (`--check-only` y `--script`).
 - Flujo: `Game._ready()` instancia 1 jugador y 2 enemigos, los registra en `BattleManager` y arranca.
 - Turno del jugador: clic en el `Player` → `SkillBar` con sus skills → `skill_preview` sigue al mouse y devuelve objetivos → se ejecuta la skill y se descuenta una acción.
@@ -22,7 +22,7 @@
 - **Slots**: `SkillBar.refresh_availability()` deshabilita los que no alcanzan.
 - **Pasivas visuales**: `passive_skill.gd` (`PassiveSkill`) + `passives/*.tres`; `GameManager.PASSIVE_CATALOG`, `learned_passives` y `learn_passive()` (descuenta puntos y emite `skill_points_changed`). `PreBattle` instancia `scenes/passive_row.tscn` por pasiva y `scenes/skill_line.tscn` por skill; deshabilita las aprendidas. No modifican stats todavía.
 - **Estado del jugador**: `player_state.gd` (`PlayerState` con `stats`, `skills`, `learned_passives` y `skill_points`) en `GameManager.player_state`. Se carga de `user://player_save.tres` al iniciar; si no existe, se crea desde `stats/player_base.tres` (duplicado) y `GameManager.STARTING_SKILLS`. `save_state()` se llama al sumar puntos o aprender pasivas. `PreBattle` lee de ahí y `combat.gd` inyecta `stats`/`skills` en el `Player` antes de agregarlo al árbol; `Player.tscn` ya no define esos datos.
-- **Fin de batalla**: `BattleUnit.unit_death_finished` se emite al terminar `on_death()`; `BattleManager` detecta victoria/derrota, espera las animaciones y emite `battle_ended(player_won)`. `Game` cambia directamente a `scenes/BattleResult.tscn` (destino provisorio, botón para volver a `Game.tscn`).
+- **Fin de batalla**: `BattleUnit.unit_death_finished` se emite al terminar `on_death()`; `BattleManager` detecta victoria/derrota, espera las animaciones y emite `battle_ended(player_won)`. `Game` cambia a `scenes/BattleResult.tscn` y su botón vuelve a `PreBattle`, cerrando el ciclo `PreBattle → Game → BattleResult → PreBattle`.
 
 ## Deuda técnica / pendientes
 
@@ -41,7 +41,7 @@
 
 ## Próximo paso recomendado
 
-Definir los efectos reales de las pasivas o el flujo de entrada/salida de `PreBattle`. Backlog completo en `task.md`.
+Definir los efectos reales de las pasivas o crear el menú de inicio. Backlog completo en `task.md`.
 
 ## Notas de continuidad
 

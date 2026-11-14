@@ -42,7 +42,9 @@
   - Definir si se compra con skill points, oro u otra moneda, y qué se puede comprar.
   - [x] Los datos persistentes entre escenas se guardan en `GameManager`.
   - [x] Persistencia en `user://player_save.tres`: `PlayerState` (stats, skills, pasivas y skill points). Se guarda al sumar puntos o aprender pasivas; HP/energía actuales no persisten.
-  - [ ] Definir cómo se entra y se sale de la escena, y cómo se inicia el combate.
+  - [x] Entrada: `PreBattle` es la escena principal y antecede al combate al correr el juego. El futuro menú de inicio será la primera escena.
+  - [x] Salida: `BattleResult` vuelve a `PreBattle`; el ciclo `PreBattle → Game → BattleResult → PreBattle` queda cerrado.
+  - [ ] Crear el menú de inicio y convertirlo en la escena principal; `PreBattle` pasa a ser la escena siguiente.
 
 ## Personajes y UI
 
