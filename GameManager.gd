@@ -34,15 +34,10 @@ signal skill_points_changed(new_value)
 
 signal enemy_count_changed(value : int)
 
-signal player_hp_changed(amount: int)
-signal player_max_hp_changed(amount : int)
-
 signal skill_preview_finished()
 
 signal enemy_died()
 signal turn_changed(turn: String)
-
-signal enemy_selected(enemy: Enemy)
 
 func add_skill_points(value: int):
 	party_state.skill_points += value

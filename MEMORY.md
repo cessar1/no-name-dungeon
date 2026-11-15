@@ -3,14 +3,14 @@
 > Resumen operativo para retomar el proyecto en otra sesión.
 > Actualizar con cada cambio y mantenerlo en 50 líneas o menos.
 
-Última actualización: 2026-11-14
+Última actualización: 2026-11-15
 
 ## Estado actual
 
 - Godot 4.7.2-stable, Forward Plus, viewport 1280x768.
 - Rama activa: `feature/party-combat` (desde `main` en `e7adddb`). Ciclo: `StartMenu` → `PreBattle` → `Game` → `BattleResult` → `PreBattle`.
 - Editor `godot-ai` conectado; verificar con `--check-only`, `--import`, arranque headless y `project_run`.
-- Combate de party implementado (partes 1-5, sin commit):
+- Combate de party implementado (partes 1-5, commiteado):
   1. Estado de party persistente (`PartyState`).
   2. Spawn de hasta 3 miembros y posiciones a la izquierda.
   3. Energía compartida de party (`PartyEnergy`, máximo 20).
@@ -34,17 +34,16 @@
 
 - `BattleUnit.regenerate_energy()` quedó sin uso para jugadores.
 - `turn_started` nunca se emite; cooldown sin implementar; `requires_target` sin uso.
-- `GameManager.player_hp_changed`/`player_max_hp_changed` sin emitir; `PLayerHpLabel` sin uso.
-- `SelectionManager` duplica la selección; `GameManager.enemy_selected` sin emisor.
 - `scenes/combat.gd` precarga `enemy.tscn` en minúscula (warning de case).
 - `project.godot` referencia `res://icon.svg`, que no existe (error preexistente).
 - `PreBattle` todavía resume solo al primer miembro.
 
 ## Próximo paso recomendado
 
-UI de party verificada en runtime (3 tarjetas, HP y energía). Próximo: revisar el backlog en `task.md` (indicador de tarjeta seleccionada y tarjeta bloqueada).
+Limpieza de deuda técnica terminada. Próximo: elegir una tarea del backlog en `task.md` (indicador de tarjeta seleccionada o tarjeta bloqueada; ambas requieren definir el diseño).
 
 ## Notas de continuidad
 
+- Limpieza (2026-11-15): eliminados `PLayerHpLabel`, señales `player_hp_changed`/`player_max_hp_changed`/`enemy_selected` y el autoload `SelectionManager` (archivo incluido).
 - Save en `user://player_save.tres` (`PartyState`); HP/energía actuales no persisten.
 - No hacer commit ni push sin pedido explícito.

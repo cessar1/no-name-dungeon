@@ -94,9 +94,9 @@
   - Limpiados bloques comentados y prints de debug en los scripts de combate.
   - Pendiente (borrado manual): assets nuevos sin uso (`HealSlot.png`, `Panel.png`, `mixkit-hard-horror-hit-drum-565.wav`), ya versionados.
 
-- [ ] Eliminar `PLayerHpLabel` de `scenes/Game.tscn` (quedó sin uso).
-- [ ] Revisar los signals `GameManager.player_hp_changed` y `player_max_hp_changed`: no se emiten en ningún lado.
-- [ ] Revisar el autoload `SelectionManager`: no se usa fuera de su propio script y duplica la selección de `BattleManager`.
+- [x] Eliminar `PLayerHpLabel` de `scenes/Game.tscn` (quedó sin uso).
+- [x] Eliminar los signals `GameManager.player_hp_changed` y `player_max_hp_changed`: no se emitían ni conectaban en ningún lado.
+- [x] Eliminar el autoload `SelectionManager`: no se usaba fuera de su propio script y duplicaba la selección de `BattleManager`. También se quitó la señal `enemy_selected`, sin emisor ni conexiones.
 
 ## Decisiones pendientes
 
