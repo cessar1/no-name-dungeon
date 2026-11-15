@@ -2,6 +2,9 @@ class_name Player extends BattleUnit
 
 @onready var animator : AnimationPlayer = $AnimationPlayer
 
+# Pool de energía compartido, asignado por BattleManager al registrar la unidad.
+var party_energy: PartyEnergy
+
 func _ready() -> void:
 	# Respaldo para ejecutar la escena sola (F6): en combate, Game la configura
 	# con el estado global antes de agregarla al árbol.
@@ -10,6 +13,12 @@ func _ready() -> void:
 	if skills.is_empty():
 		skills.assign(GameManager.player_state.skills)
 	super._ready()
+
+# La energía del jugador sale del pool compartido de la party.
+func can_use_skill(skill: Skill) -> bool:
+	if party_energy == null:
+		return super.can_use_skill(skill)
+	return is_alive() and party_energy.can_afford(skill.energy_cost)
 
 func use_skill(skill: Skill, targets: Array[BattleUnit]) -> bool:
 	if not can_use_skill(skill):
@@ -22,8 +31,11 @@ func use_skill(skill: Skill, targets: Array[BattleUnit]) -> bool:
 		if target == null or not skill.is_valid_target(target):
 			return false
 
-	current_energy -= skill.energy_cost
-	unit_energy_changed.emit(self, current_energy, max_energy)
+	if party_energy:
+		party_energy.spend(skill.energy_cost)
+	else:
+		current_energy -= skill.energy_cost
+		unit_energy_changed.emit(self, current_energy, max_energy)
 
 	for target in targets:
 		skill.execute(self, target)
