@@ -8,7 +8,7 @@
 ## Estado actual
 
 - Godot 4.7.2-stable, Forward Plus, viewport 1280x768.
-- Rama activa: `feature/party-combat` (desde `main` en `e7adddb`). Ciclo: `StartMenu` → `PreBattle` → `Game` → `BattleResult` → `PreBattle`.
+- Rama activa: `main` (PR #3 integró `feature/party-combat`). Ciclo: `StartMenu` → `PreBattle` → `Game` → `BattleResult` → `PreBattle`.
 - Editor `godot-ai` conectado; verificar con `--check-only`, `--import`, arranque headless y `project_run`.
 - Combate de party implementado (partes 1-5, commiteado):
   1. Estado de party persistente (`PartyState`).

@@ -7,8 +7,8 @@
 Village es un RPG 2D para Godot 4.7 (Forward Plus) centrado en combate por turnos.
 
 - Escena principal: `res://scenes/Game.tscn`.
-- Rama de trabajo actual: `feature/party-combat`.
-- El proyecto está en medio de un refactor del flujo de combate; hay bastante trabajo sin commitear. No asumir que el código refleja un estado terminado.
+- `feature/party-combat` ya está integrada en `main` (PR #3). Partir de `main` actualizado para cada tarea nueva.
+- El combate de party está implementado y verificado en runtime; quedan mecánicas pendientes registradas en `task.md`.
 
 ## 2. Cómo trabajar en este repo
 
@@ -59,10 +59,6 @@ Village es un RPG 2D para Godot 4.7 (Forward Plus) centrado en combate por turno
 - Posiciones: 3 posiciones de party a la izquierda (`Positions/0`, `PartyPosition1`, `PartyPosition2`); los enemigos usan las de la derecha.
 - UI de esta rama: panel abajo-centro con la barra de energía compartida arriba y 3 tarjetas de personaje en una fila (retrato, nombre, HP actual/máxima y barra); implementado en `PartyStatus` + `PartyMemberStatus`.
 - Presentar cualquier ajuste o mecánica nueva antes de implementarla.
-
-### Posibles restos
-
-- `BattleScene.tscn` + `battle_scene.gd` (código comentado), `TestSkelleton.tscn`, `scenes/selector.gd`. Confirmar antes de borrar.
 
 ## 4. Convenciones de código
 
