@@ -38,6 +38,11 @@
 
 ## Escena previa al combate
 
+- [ ] **Renombrar y rediseñar la escena previa al combate como hub de party.**
+  - La escena va a tener otro nombre (a definir).
+  - Debe mostrar los miembros que tenemos y permitir interactuar con ellos: ver estadísticas, skills, pasivas, etc.
+  - Interacciones, layout y alcance pendientes de definir; sujeto a cambios.
+
 - [ ] **Crear una escena de preparación antes del combate.**
   - Punto de partida para acciones fuera de batalla: gastar skill points, comprar, etc.
   - [x] Primer paso: `scenes/PreBattle.tscn` muestra los skill points y tiene un botón para iniciar `scenes/Game.tscn`.
@@ -84,6 +89,50 @@
 - [ ] **Feedback al no poder usar una skill.**
   - Hoy, sin energía suficiente, el slot queda deshabilitado y no pasa nada más.
   - Evaluar si hace falta un aviso visual o sonoro.
+
+## Habilidades pasivas y árbol de talentos
+
+- [ ] **Sección de pasivas como árbol de talentos expandible.**
+  - Representación inicial en forma de nodos o árbol de talentos, con expansión en todas las direcciones.
+  - Al aprender pasivas aparecen nuevas habilidades disponibles.
+  - Relacionado con "Definir los efectos reales de las pasivas" (sección Escena previa al combate).
+  - Alcance, navegación, reglas de desbloqueo y presentación pendientes de definir; sujeto a cambios.
+
+## Mapa y exploración
+
+- [ ] **Sección de mapa explorable con nodos.**
+  - El mapa se recorre por zonas representadas como nodos; se visitan para superar los desafíos de cada una.
+  - Tipos de desafío, orden y desbloqueo de zonas, y presentación pendientes de definir; sujeto a cambios.
+
+- [ ] **Cantidad de enemigos definida por zona.**
+  - Cada zona define cuántos enemigos tiene.
+  - Falta definir si la cantidad es fija o varía en cada visita, y si la composición es fija o aleatoria.
+
+## Sistema de enemigos
+
+- [ ] **Sistema de enemigos por zona.**
+  - Definir cómo se gestionan, crean y personalizan las escenas de enemigos.
+  - Personalización por configuración: raza, clase, rareza y level.
+  - El level se asigna a los mobs según la zona.
+  - Alternativas de arquitectura a definir:
+    - A) Una sola `Enemy.tscn` + recurso de datos (`EnemyData`) con stats, skills, sprite y nombre.
+    - B) Una escena por tipo de enemigo.
+    - C) Híbrida: escena base con datos y escenas variante solo cuando cambie el arte o las animaciones.
+  - Hoy `Enemy.tscn` es única, con sprite y nombre fijos, y `combat.gd` instancia siempre 2 enemigos sin configuración.
+
+- [ ] **Herramienta para crear enemigos rápidamente.**
+  - Herramienta de editor que permita crear y configurar enemigos (raza, clase, rareza, level, stats, skills, drops) y dejarlos listos para integrarlos al juego.
+  - Alcance pendiente: plugin de editor, recurso + inspector o herramienta asistida por IA.
+
+## Drops y materiales
+
+- [ ] **Sistema de drops por zona y level.**
+  - Los enemigos dropean según la zona y su level asignado.
+  - Falta definir probabilidades, tablas de drop y si el level modifica cantidad o calidad.
+
+- [ ] **Materiales exclusivos por zona.**
+  - Cada zona dropea materiales distintos para incentivar que el jugador visite diferentes sitios.
+  - Falta definir qué materiales existen, para qué se usan y cómo se obtienen.
 
 ## Limpieza
 
