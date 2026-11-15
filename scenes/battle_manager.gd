@@ -11,12 +11,14 @@ signal player_selected(unit: BattleUnit)
 var active_players: Array[BattleUnit]
 var active_enemies: Array[BattleUnit]
 
-var actions_remaining: int = 0
 var enemies_to_act: Array[BattleUnit]
 
 var selected_player: BattleUnit
 var skill_bar : SkillBar
 var current_turn : Turn
+
+# Pool de energía compartido por toda la party durante la batalla.
+var party_energy := PartyEnergy.new()
 
 var battle_over := false
 var battle_result_announced := false
@@ -26,6 +28,7 @@ var units_dying := 0
 func start_battle():
 	if battle_over:
 		return
+	party_energy.setup(GameManager.party_state.shared_energy_max)
 	start_player_turn()
 	
 func start_player_turn():
@@ -33,22 +36,29 @@ func start_player_turn():
 		return
 
 	current_turn = Turn.PLAYER
-	actions_remaining  = active_players.size()
-
-	for player in active_players:
-		player.regenerate_energy()
+	party_energy.regenerate(BattleUnit.ENERGY_REGEN)
 
 	if skill_bar and selected_player:
 		skill_bar.refresh_availability(selected_player)
 
-func finish_player_action():
-	if battle_over:
+	# Si la party no puede pagar ninguna skill, cede el turno.
+	if not party_can_act():
+		change_turn()
+
+# El jugador puede ceder el turno para conservar energía.
+func finish_player_turn():
+	if battle_over or current_turn != Turn.PLAYER:
 		return
 
-	actions_remaining -= 1
-	
-	if actions_remaining <= 0:
-		change_turn()
+	change_turn()
+
+# La party puede actuar mientras algún miembro vivo pueda pagar una skill.
+func party_can_act() -> bool:
+	for player in active_players:
+		for skill in player.get_skills():
+			if player.can_use_skill(skill):
+				return true
+	return false
 		
 func start_enemy_turn():
 	if battle_over:
@@ -97,6 +107,7 @@ func register_unit(unit: BattleUnit):
 		active_enemies.append(unit)
 	elif unit is Player:
 		active_players.append(unit)
+		(unit as Player).party_energy = party_energy
 		unit.unit_selected.connect(_on_unit_selected)
 
 func _on_unit_selected(unit: BattleUnit):
@@ -141,7 +152,8 @@ func _on_skill_selected(skill : Skill):
 	if casted:
 		if skill_bar:
 			skill_bar.refresh_availability(player)
-		finish_player_action()
+		if not party_can_act():
+			change_turn()
 
 func _on_unit_died(unit : BattleUnit):
 	units_dying += 1

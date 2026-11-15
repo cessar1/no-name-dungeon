@@ -1,0 +1,57 @@
+[gd_scene format=3 uid="uid://c6c8xdf7gkvqv"]
+
+[ext_resource type="Script" uid="uid://b7ukn65iqdsrr" path="res://scenes/party_status.gd" id="1_ydnva"]
+[ext_resource type="PackedScene" uid="uid://di5ru6u2k20dp" path="res://scenes/party_member_status.tscn" id="2_tvg80"]
+[ext_resource type="Texture2D" uid="uid://deco8vrhxxwa6" path="res://assets/ui/Bar.png" id="3_dvmq8"]
+
+[node name="PartyStatus" type="PanelContainer" unique_id=842386555]
+script = ExtResource("1_ydnva")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1266762137]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=1306607672]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="EnergyRow" type="HBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=300382909]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="EnergyLabel" type="Label" parent="MarginContainer/VBoxContainer/EnergyRow" unique_id=1365079879]
+layout_mode = 2
+text = "Energía de party"
+
+[node name="MpBar" type="TextureProgressBar" parent="MarginContainer/VBoxContainer/EnergyRow" unique_id=2105571779]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 25)
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 20.0
+value = 20.0
+texture_under = ExtResource("3_dvmq8")
+texture_progress = ExtResource("3_dvmq8")
+tint_progress = Color(0, 0.5411765, 0.9019608, 1)
+
+[node name="EnergyValueLabel" type="Label" parent="MarginContainer/VBoxContainer/EnergyRow" unique_id=2128706727]
+unique_name_in_owner = true
+layout_mode = 2
+text = "20 / 20"
+
+[node name="MembersContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=1042646676]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Slot1" parent="MarginContainer/VBoxContainer/MembersContainer" unique_id=1923907027 instance=ExtResource("2_tvg80")]
+layout_mode = 2
+
+[node name="Slot2" parent="MarginContainer/VBoxContainer/MembersContainer" unique_id=98202997 instance=ExtResource("2_tvg80")]
+layout_mode = 2
+
+[node name="Slot3" parent="MarginContainer/VBoxContainer/MembersContainer" unique_id=1561599380 instance=ExtResource("2_tvg80")]
+layout_mode = 2
