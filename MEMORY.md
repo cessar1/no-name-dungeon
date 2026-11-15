@@ -8,43 +8,43 @@
 ## Estado actual
 
 - Godot 4.7.2-stable, Forward Plus, viewport 1280x768.
-- Rama activa: `feature/start-menu`. Escena principal: `res://scenes/StartMenu.tscn` (título "Village", Jugar → `PreBattle`, Salir). `PreBattle` muestra skill points, HP/energía/skills desde `GameManager.player_state` y pasivas; botón a `Game.tscn`.
-- Editor: addon `godot-ai` conectado con herramientas MCP disponibles; verificar en headless (`--check-only`, `--script` y arranque del proyecto).
-- Flujo: `Game._ready()` instancia 1 jugador y 2 enemigos, los registra en `BattleManager` y arranca.
-- Turno: clic en el `Player` → `SkillBar` → `skill_preview` sigue al mouse → se ejecuta la skill y se descuenta una acción; al terminar, actúan los enemigos.
+- Rama activa: `feature/party-combat` (desde `main` en `e7adddb`). Ciclo: `StartMenu` → `PreBattle` → `Game` → `BattleResult` → `PreBattle`.
+- Editor `godot-ai` conectado; verificar con `--check-only`, `--import`, arranque headless y `project_run`.
+- Combate de party implementado (partes 1-5, sin commit):
+  1. Estado de party persistente (`PartyState`).
+  2. Spawn de hasta 3 miembros y posiciones a la izquierda.
+  3. Energía compartida de party (`PartyEnergy`, máximo 20).
+  4. Turnos por energía agotada o por pasar turno.
+  5. HP de todos en pantalla y barra de MP compartida.
+- Turno actual: clic en un `Player` → `SkillBar` → preview → skill. No hay límite de acciones por miembro; el turno sigue mientras la party pueda pagar alguna skill y termina al no poder o con el botón "Pasar turno".
 
 ## Sistemas implementados
 
-- **Energía por batalla**: `BattleUnit.can_use_skill()` exige `current_energy >= energy_cost`; `Player.use_skill()` cobra una vez por lanzamiento y ejecuta por target; `regenerate_energy()` suma 10 al inicio del turno con tope en `max_energy`.
-- **UI**: `CharacterStatus` tiene script propio (`set_hp`/`set_energy`); `CanvasLayer` sigue a la unidad seleccionada y actualiza HP/energía vía `unit_hp_changed` y `unit_energy_changed`.
-- **Slots**: `SkillBar.refresh_availability()` deshabilita los que no alcanzan.
-- **Pasivas visuales**: `passive_skill.gd` (`PassiveSkill`) + `passives/*.tres`; `GameManager.PASSIVE_CATALOG`, `learned_passives` y `learn_passive()` (descuenta puntos y emite `skill_points_changed`). `PreBattle` instancia `scenes/passive_row.tscn` por pasiva y `scenes/skill_line.tscn` por skill; deshabilita las aprendidas. No modifican stats todavía.
-- **Estado del jugador**: `player_state.gd` (`PlayerState` con `stats`, `skills`, `learned_passives` y `skill_points`) en `GameManager.player_state`. Se carga de `user://player_save.tres` al iniciar; si no existe, se crea desde `stats/player_base.tres` (duplicado) y `GameManager.STARTING_SKILLS`. `save_state()` se llama al sumar puntos o aprender pasivas. `PreBattle` lee de ahí y `combat.gd` inyecta `stats`/`skills` en el `Player` antes de agregarlo al árbol; `Player.tscn` ya no define esos datos.
-- **Menú de inicio**: `scenes/StartMenu.tscn` (Control) con fondo, título y botones Jugar/Salir; `start_menu.gd` cambia a `PreBattle` o llama a `get_tree().quit()`.
-- **Fin de batalla**: `BattleUnit.unit_death_finished` se emite al terminar `on_death()`; `BattleManager` detecta victoria/derrota, espera las animaciones y emite `battle_ended(player_won)`. `Game` cambia a `scenes/BattleResult.tscn` y su botón vuelve a `PreBattle`, cerrando el ciclo `StartMenu → PreBattle → Game → BattleResult → PreBattle`.
+- **PartyState** (`party_state.gd`): `members: Array[PlayerState]`, `shared_energy_max = 20`, `skill_points` y `learned_passives` de party, `MAX_MEMBERS = 3`. `GameManager.party_state` es el dueño; `player_state` es un getter de solo lectura al primer miembro (compatibilidad con `PreBattle`/`Player`).
+- **Migración**: un save viejo `PlayerState` se convierte a `PartyState` conservando stats/skills del primer miembro y la progresión; se completa hasta 3 miembros base. El save actual ya está migrado.
+- **Energía compartida** (`party_energy.gd`): pool de batalla `current/max`, arranca lleno (20) y regenera 10 por turno (tope 20). `Player.can_use_skill()`/`use_skill()` gastan del pool; los enemigos usan energía propia. `BattleManager.party_energy` se asigna al registrar cada `Player`.
+- **Turnos**: sin `actions_remaining`. Tras cada skill, `party_can_act()` decide si sigue el turno; si ningún miembro vivo puede pagar ninguna skill, `change_turn()`. El botón `PassTurnButton` (UI) llama a `finish_player_turn()` para ceder el turno.
+- **Spawn**: `combat.gd` instancia un `Player` por miembro en `Positions/0`, `PartyPosition1` (300,360) y `PartyPosition2` (300,546); esas posiciones se excluyen del pool de enemigos.
+- **UI**: panel `PartyStatus` abajo-centro (636x163) con la fila de energía arriba ("Energía de party", `actual / máximo` y barra) y 3 tarjetas de 200x110 en una fila. Cada `PartyMemberStatus` muestra retrato 56x56, nombre, `HP actual / máxima` y barra. `CanvasLayer.setup_party()` crea las 3 tarjetas desde `active_players` (las faltantes con `show_empty()`); el MP se actualiza con `party_energy.changed`. `CharacterStatus` fue eliminado.
+- **Slots**: `SkillBar.refresh_availability()` deshabilita los que no alcanzan según `can_use_skill()`.
+- **Pasivas visuales**: `passive_skill.gd` + `passives/*.tres`; catálogo y aprendizaje en `GameManager`; no modifican stats.
+- **Menú/ciclo**: `StartMenu` → `PreBattle` → `Game` → `BattleResult` → `PreBattle`. Fin de batalla por `battle_ended(player_won)`.
 
 ## Deuda técnica / pendientes
 
-- `turn_started` nunca se emite.
-- `actions_remaining` no registra qué jugador actuó (problema al agregar varios personajes).
-- Cooldown no implementado (`Skill.is_on_cooldown()` siempre `false`).
-- `Skill.requires_target` declarado pero sin uso.
-- `GameManager.player_hp_changed` / `player_max_hp_changed` sin emitir.
-- `PLayerHpLabel` quedó sin uso en `Game.tscn`.
-- Cálculo de daño plano; `stats` (defence, accuracy, evasion, etc.) sin usar.
-- `SelectionManager` duplica la selección de `BattleManager` y no se usa fuera de su script.
-- `GameManager.enemy_selected` quedó sin emisor tras eliminar `selector.gd`.
-- Código sin uso: `skill_preview.gd` (`collision`, `is_single_target`, `get_targets()`) y `enemy.gd::_on_input_event()`.
-- `scenes/combat.gd` precarga `res://scenes/enemy.tscn` en minúscula; en plataformas case-sensitive falla (Godot ya emite warning).
-- `Player.tscn` ya no define `stats`/`skills`: `combat.gd` los inyecta desde `GameManager.player_state` y `Player._ready()` usa ese mismo estado como respaldo para ejecutar la escena sola (F6).
+- `BattleUnit.regenerate_energy()` quedó sin uso para jugadores.
+- `turn_started` nunca se emite; cooldown sin implementar; `requires_target` sin uso.
+- `GameManager.player_hp_changed`/`player_max_hp_changed` sin emitir; `PLayerHpLabel` sin uso.
+- `SelectionManager` duplica la selección; `GameManager.enemy_selected` sin emisor.
+- `scenes/combat.gd` precarga `enemy.tscn` en minúscula (warning de case).
+- `project.godot` referencia `res://icon.svg`, que no existe (error preexistente).
+- `PreBattle` todavía resume solo al primer miembro.
 
 ## Próximo paso recomendado
 
-Definir los efectos reales de las pasivas. Backlog completo en `task.md`.
+UI de party verificada en runtime (3 tarjetas, HP y energía). Próximo: revisar el backlog en `task.md` (indicador de tarjeta seleccionada y tarjeta bloqueada).
 
 ## Notas de continuidad
 
-- Commits: `a72d58b` (PreBattle + estado persistente), `7868046` (PreBattle principal + ciclo), `5cd5b32` (regla de ramas/PR). Assets `HealSlot.png`, `Panel.png` y el sonido de golpe siguen sin uso en escenas.
-- Datos persistentes: `user://player_save.tres` guarda `PlayerState` (stats, skills, pasivas y skill points). HP/energía actuales no se guardan. Las referencias a `.tres` de skills/pasivas se rompen si se mueven o renombran esos archivos.
-- Reglas y convenciones: `AGENTS.md` (incluye la sección 11 de buenas prácticas de código).
-- No hacer commits sin pedido explícito.
+- Save en `user://player_save.tres` (`PartyState`); HP/energía actuales no persisten.
+- No hacer commit ni push sin pedido explícito.

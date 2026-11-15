@@ -8,53 +8,69 @@
 
 ## Contexto actual
 
-- `CharacterStatus` muestra HP y energía de la unidad seleccionada.
+- `PartyStatus` es un panel abajo-centro: fila de energía compartida arriba y 3 tarjetas de personaje (200x110) en una fila.
+- Cada tarjeta muestra retrato, nombre, HP actual/máxima y barra de vida.
 - La barra de skills cambia según el jugador seleccionado.
-- Hoy hay una acción por jugador por turno (`actions_remaining = active_players.size()`).
+- La energía es un pool compartido de party (máximo 20); el turno sigue mientras la party pueda pagar alguna skill y termina al no poder o con "Pasar turno".
+
+## Party (rama `feature/party-combat`)
+
+- [x] **Estado persistente de party.** `PartyState` con hasta 3 miembros, progresión de party y migración del save viejo de 1 personaje.
+- [x] **Spawn de la party y posiciones.** `combat.gd` instancia un jugador por miembro; 2 posiciones nuevas a la izquierda.
+- [x] **Energía compartida.** Pool único de 20, arranca lleno y regenera 10 por turno; la barra de MP muestra el pool.
+- [x] **Turnos por energía o pasar turno.** Sin `actions_remaining`; `party_can_act()` decide si sigue el turno y `PassTurnButton` permite cederlo.
+- [x] **HP de todos visible y UI de party.** `PartyStatus` + `PartyMemberStatus` con el panel abajo-centro, energía compartida arriba y 3 tarjetas de personaje.
 
 ## Combate y turnos
 
-- [ ] **Atacar hasta quedarse sin energía o pasar el turno.**
-  - Hoy el turno del jugador termina después de una acción.
-  - Nuevo: el jugador puede seguir lanzando skills mientras tenga energía.
-  - El turno termina al quedarse sin energía o al elegir "pasar turno".
-  - Definir cómo se pasa el turno (botón/tecla) y cómo se combina con varios personajes.
+- [x] **Atacar hasta quedarse sin energía o pasar el turno.**
+  - La party puede seguir lanzando skills mientras quede energía compartida.
+  - El turno termina cuando ningún miembro vivo puede pagar ninguna skill o al pulsar "Pasar turno".
 
 - [x] **Cerrar el ciclo de batalla (victoria/derrota).**
   - `BattleManager` detecta victoria/derrota, espera la animación de muerte y emite `battle_ended(player_won)`.
   - `Game` cambia directamente a `scenes/BattleResult.tscn` cuando se emite `battle_ended`.
   - `BattleResult` muestra el resultado y un botón para volver a `Game.tscn` (destino provisorio).
 
-- [ ] **Preparar las acciones para varios personajes.**
-  - `actions_remaining` no registra qué jugador actuó; con 2 jugadores se podría usar el mismo dos veces.
-  - Mantener la barra de skills atada al jugador seleccionado.
+- [x] **Preparar las acciones para varios personajes.**
+  - Se eliminó `actions_remaining`; ya no hay límite de acciones por miembro.
+  - La barra de skills sigue atada al jugador seleccionado.
 
 ## Escena previa al combate
 
 - [ ] **Crear una escena de preparación antes del combate.**
   - Punto de partida para acciones fuera de batalla: gastar skill points, comprar, etc.
   - [x] Primer paso: `scenes/PreBattle.tscn` muestra los skill points y tiene un botón para iniciar `scenes/Game.tscn`.
-  - [x] Segundo paso: `PreBattle` muestra HP, energía y skills del jugador (solo lectura), tomados de `scenes/Player.tscn`.
+  - [x] Segundo paso: `PreBattle` muestra HP, energía y skills del primer miembro (solo lectura); falta adaptarlo a toda la party.
   - [x] Tercer paso: pasivas visuales en `PreBattle`. Catálogo en `passives/*.tres` (`PassiveSkill`) y estado en `GameManager` (`learned_passives`, `learn_passive()`). Aún no modifican stats.
-  - [x] Estado del jugador centralizado en `GameManager.player_state` (`PlayerState` con stats y skills); valores iniciales desde `stats/player_base.tres` y `STARTING_SKILLS`. `PreBattle` y el combate leen de ahí.
-  - [x] `combat.gd` inyecta `GameManager.player_state` en el `Player` y `Player.tscn` ya no define stats/skills (con respaldo para ejecutar la escena sola).
+  - [x] Estado de party centralizado en `GameManager.party_state` (`PartyState` con miembros y progresión); valores iniciales de cada miembro desde `stats/player_base.tres` y `STARTING_SKILLS`. `PreBattle` y el combate leen de ahí.
+  - [x] `combat.gd` instancia un `Player` por miembro de `GameManager.party_state`; `Player.tscn` ya no define stats/skills (con respaldo para ejecutar la escena sola).
   - [ ] Definir los efectos reales de las pasivas.
   - Definir si se compra con skill points, oro u otra moneda, y qué se puede comprar.
   - [x] Los datos persistentes entre escenas se guardan en `GameManager`.
-  - [x] Persistencia en `user://player_save.tres`: `PlayerState` (stats, skills, pasivas y skill points). Se guarda al sumar puntos o aprender pasivas; HP/energía actuales no persisten.
+  - [x] Persistencia en `user://player_save.tres`: `PartyState` (miembros con stats/skills + skill points y pasivas de party). Se guarda al sumar puntos o aprender pasivas; HP/energía actuales no persisten.
   - [x] Entrada: el menú de inicio es la primera escena; Jugar lleva a `PreBattle` y Salir cierra el juego. `PreBattle` antecede al combate.
   - [x] Salida: `BattleResult` vuelve a `PreBattle`; el ciclo `PreBattle → Game → BattleResult → PreBattle` queda cerrado.
   - [x] Menú de inicio: `scenes/StartMenu.tscn` con título, Jugar y Salir; es la escena principal.
 
 ## Personajes y UI
 
-- [ ] **Vida visible de todos los personajes.**
-  - Hoy solo se ve la vida del personaje seleccionado.
-  - Cuando haya varios personajes, cada uno debe mostrar su HP en pantalla todo el tiempo.
-  - Definir si la energía también se muestra permanentemente por personaje o solo para el seleccionado.
+- [x] **Vida visible de todos los personajes.**
+  - `PartyStatus` muestra una tarjeta por miembro con retrato, nombre, HP actual/máxima y barra de vida.
+  - La barra de energía sigue siendo única para la party y va encima de las tarjetas.
+  - [x] Diseño de la UI de party definido e implementado (tarjetas abajo-centro).
 
-- [ ] **Adaptar `CharacterStatus` a varios personajes.**
-  - Evaluar si se instancia uno por personaje o si se usa otro contenedor de UI.
+- [ ] **Indicador visual de la tarjeta seleccionada.**
+  - Destacar la tarjeta del personaje que tiene el turno/selección actual.
+  - Definir el estilo (borde, color o resaltado) antes de implementarlo.
+
+- [ ] **Tarjeta placeholder para personajes faltantes.**
+  - Si la party tiene menos de 3 miembros, la tarjeta libre muestra un candado y el texto "Desbloquear".
+  - Hoy `PartyMemberStatus.show_empty()` solo deja la tarjeta vacía.
+  - Definir qué hace el botón "Desbloquear" antes de implementarlo.
+
+- [x] **Adaptar `CharacterStatus` a varios personajes.**
+  - Resuelto con `PartyStatus` + `PartyMemberStatus`; `CharacterStatus` fue eliminado.
 
 ## Skills
 
@@ -85,4 +101,4 @@
 ## Decisiones pendientes
 
 - [ ] Confirmar si los enemigos deben gastar energía (hoy la ignoran).
-- [ ] Definir qué pasa cuando un jugador no tiene ninguna skill usable por falta de energía.
+- [x] Definido: si ningún miembro vivo puede pagar ninguna skill, el turno pasa solo a los enemigos.

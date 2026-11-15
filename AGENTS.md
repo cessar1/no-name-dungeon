@@ -7,7 +7,7 @@
 Village es un RPG 2D para Godot 4.7 (Forward Plus) centrado en combate por turnos.
 
 - Escena principal: `res://scenes/Game.tscn`.
-- Rama de trabajo actual: `refactor/combat-flow`.
+- Rama de trabajo actual: `feature/party-combat`.
 - El proyecto está en medio de un refactor del flujo de combate; hay bastante trabajo sin commitear. No asumir que el código refleja un estado terminado.
 
 ## 2. Cómo trabajar en este repo
@@ -32,18 +32,33 @@ Village es un RPG 2D para Godot 4.7 (Forward Plus) centrado en combate por turno
 
 ### Escenas
 
-- `scenes/Game.tscn`: escena de combate. Nodo raíz `Game` (`scenes/combat.gd`), con `BattleManager`, `Units`, `Positions`, `CanvasLayer` (HP), `UI` (skill points) y `SkillBar`.
+- `scenes/Game.tscn`: escena de combate. Nodo raíz `Game` (`scenes/combat.gd`), con `BattleManager`, `Units`, `Positions`, `CanvasLayer` (UI de party), `UI` (skill points) y `SkillBar`.
 - `scenes/Player.tscn`, `scenes/Enemy.tscn`: unidades instanciables.
 - `scenes/skill_bar.tscn` + `skill_bar.gd`: panel que lista las skills del jugador seleccionado.
 - `scenes/skill_slot.tscn` + `skill_slot.gd`: botón/icono de una skill.
 - `scenes/skill_preview.tscn` + `skill_preview.gd`: área que sigue al mouse y devuelve los objetivos seleccionados.
-- `scenes/character_status.tscn`, `scenes/selection_ring.tscn`.
+- `scenes/party_status.tscn` + `party_status.gd`: panel inferior de party, con la fila de energía compartida y 3 tarjetas de personaje.
+- `scenes/party_member_status.tscn` + `party_member_status.gd`: tarjeta reutilizable de 200x110 (retrato, nombre, HP actual/máxima y barra) de un miembro.
+- `scenes/selection_ring.tscn`.
 - `scenes/battle_manager.gd`: lógica de turnos (`PLAYER`/`ENEMY`), registro de unidades, selección de jugador y ejecución de skills. Es el script del nodo `BattleManager` dentro de `Game.tscn`.
 
 ### Datos y recursos
 
 - `skills/*.tres`: `basic_attack`, `fire_ball`, `wind_strike`.
 - `assets/`: sprites de personajes, UI y sonidos.
+
+### Party y energía (diseño acordado)
+
+- El combate es para una party de hasta **3 jugadores**; el estado persistente debe soportar 1 o más miembros.
+- `party_state.gd` (`PartyState`): `members: Array[PlayerState]`, `shared_energy_max`, `skill_points` y `learned_passives` de party; `MAX_MEMBERS = 3`.
+- `party_energy.gd` (`PartyEnergy`): pool de energía de batalla compartido por la party.
+- La energía es un **pool único de party**: máximo 20, arranca lleno en cada batalla y regenera 10 al inicio de cada turno del jugador (tope 20). Los enemigos conservan energía propia.
+- Los **skill points y las pasivas son de la party**, no de cada miembro. Cada miembro solo aporta `stats` y `skills`.
+- Partida nueva: **3 miembros** con los mismos stats/skills base (provisional hasta definir personajes).
+- Turno del jugador: no hay límite de acciones por miembro. La party sigue actuando mientras algún miembro vivo pueda pagar alguna skill con el pool; si nadie puede, el turno pasa solo. Un botón fijo "Pasar turno" en la UI permite cederlo antes para conservar energía.
+- Posiciones: 3 posiciones de party a la izquierda (`Positions/0`, `PartyPosition1`, `PartyPosition2`); los enemigos usan las de la derecha.
+- UI de esta rama: panel abajo-centro con la barra de energía compartida arriba y 3 tarjetas de personaje en una fila (retrato, nombre, HP actual/máxima y barra); implementado en `PartyStatus` + `PartyMemberStatus`.
+- Presentar cualquier ajuste o mecánica nueva antes de implementarla.
 
 ### Posibles restos
 
