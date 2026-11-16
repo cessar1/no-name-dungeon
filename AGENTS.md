@@ -33,6 +33,7 @@ Village es un RPG 2D para Godot 4.7 (Forward Plus) centrado en combate por turno
 ### Escenas
 
 - `scenes/Game.tscn`: escena de combate. Nodo raíz `Game` (`scenes/combat.gd`), con `BattleManager`, `Units`, `Positions`, `CanvasLayer` (UI de party), `UI` (skill points) y `SkillBar`.
+- `scenes/Map.tscn` + `scenes/map.gd`: mapa de zonas (esqueleto) con 5 nodos de prueba conectados, panel de información y botón "Entrar" al combate.
 - `scenes/Player.tscn`, `scenes/Enemy.tscn`: unidades instanciables.
 - `scenes/skill_bar.tscn` + `skill_bar.gd`: panel que lista las skills del jugador seleccionado.
 - `scenes/skill_slot.tscn` + `skill_slot.gd`: botón/icono de una skill.

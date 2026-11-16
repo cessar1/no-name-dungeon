@@ -8,7 +8,7 @@
 ## Estado actual
 
 - Godot 4.7.2-stable, Forward Plus, viewport 1280x768.
-- Rama activa: `main` (PR #3 integró `feature/party-combat`). Ciclo: `StartMenu` → `PreBattle` → `Game` → `BattleResult` → `PreBattle`.
+- Rama activa: `feature/map-screen` (desde `main` en `93b74f4`). Ciclo: `StartMenu` → `Map` → `Game` → `BattleResult` → `Map`; `PreBattle` quedó fuera del ciclo.
 - Editor `godot-ai` conectado; verificar con `--check-only`, `--import`, arranque headless y `project_run`.
 - Combate de party implementado (partes 1-5, commiteado):
   1. Estado de party persistente (`PartyState`).
@@ -28,7 +28,8 @@
 - **UI**: panel `PartyStatus` abajo-centro (636x163) con la fila de energía arriba ("Energía de party", `actual / máximo` y barra) y 3 tarjetas de 200x110 en una fila. Cada `PartyMemberStatus` muestra retrato 56x56, nombre, `HP actual / máxima` y barra. `CanvasLayer.setup_party()` crea las 3 tarjetas desde `active_players` (las faltantes con `show_empty()`); el MP se actualiza con `party_energy.changed`. `CharacterStatus` fue eliminado.
 - **Slots**: `SkillBar.refresh_availability()` deshabilita los que no alcanzan según `can_use_skill()`.
 - **Pasivas visuales**: `passive_skill.gd` + `passives/*.tres`; catálogo y aprendizaje en `GameManager`; no modifican stats.
-- **Menú/ciclo**: `StartMenu` → `PreBattle` → `Game` → `BattleResult` → `PreBattle`. Fin de batalla por `battle_ended(player_won)`.
+- **Menú/ciclo**: `StartMenu` → `Map` → `Game` → `BattleResult` → `Map`. Fin de batalla por `battle_ended(player_won)`.
+- **Mapa (esqueleto)**: `scenes/Map.tscn` + `map.gd` con 5 zonas de prueba conectadas, panel de info y "Entrar" al combate; sin datos reales ni desbloqueo.
 
 ## Deuda técnica / pendientes
 
@@ -40,7 +41,7 @@
 
 ## Próximo paso recomendado
 
-Limpieza de deuda técnica terminada. Próximo: elegir una tarea del backlog en `task.md` (indicador de tarjeta seleccionada o tarjeta bloqueada; ambas requieren definir el diseño).
+Esqueleto del mapa en `feature/map-screen`. Próximo: definir estilo visual y datos de zona (`ZoneData`) antes de pulir; después desbloqueo y enemigos por zona.
 
 ## Notas de continuidad
 
