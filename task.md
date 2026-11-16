@@ -102,11 +102,29 @@
 
 - [ ] **Sección de mapa explorable con nodos.**
   - El mapa se recorre por zonas representadas como nodos; se visitan para superar los desafíos de cada una.
+  - [x] Primer paso (esqueleto): `scenes/Map.tscn` con 5 zonas de prueba conectadas, panel de información y botón "Entrar" que inicia el combate. Sin datos reales, desbloqueo ni estilos finales.
+  - [x] Ciclo: `StartMenu` → `Map` → `Game` → `BattleResult` → `Map`. `PreBattle` queda fuera del ciclo por ahora (se conserva en disco).
+  - [ ] **Ventana modal de zona.** Reemplazar el panel lateral de información por una ventana modal con la información de la zona y el botón "Entrar". Contenido y estilo a definir.
   - Tipos de desafío, orden y desbloqueo de zonas, y presentación pendientes de definir; sujeto a cambios.
 
-- [ ] **Cantidad de enemigos definida por zona.**
-  - Cada zona define cuántos enemigos tiene.
+- [ ] **Salas dentro de cada zona.**
+  - Al entrar a una zona se recorre una serie de salas; cada sala tiene enemigos.
+  - Algunas salas especiales requieren una llave o un item especial para entrar.
+  - Algunas zonas tienen jefes (bosses).
+  - Cantidad de salas, estructura, llaves, items y jefes pendientes de definir; sujeto a cambios.
+
+- [ ] **Cantidad de enemigos definida por sala.**
+  - Cada sala define cuántos enemigos tiene.
   - Falta definir si la cantidad es fija o varía en cada visita, y si la composición es fija o aleatoria.
+
+- [ ] **Minimapa durante el combate.**
+  - La pantalla de combate muestra un minimapa de la ubicación actual (zona y sala).
+  - Estilo, tamaño y datos a mostrar pendientes de definir.
+
+- [ ] **Selección de camino al limpiar la sala.**
+  - Al eliminar todos los enemigos se muestra una versión ampliada del minimapa con los caminos posibles.
+  - El jugador puede interactuar con esa vista para elegir el siguiente camino.
+  - Representación de los caminos, transición entre salas y reglas de desbloqueo pendientes de definir.
 
 ## Sistema de enemigos
 
