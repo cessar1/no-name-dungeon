@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="ZoneData" load_steps=2 format=3]
+
+[ext_resource type="Script" uid="uid://cx7jr05vxbgdj" path="res://zone_data.gd" id="1_zone"]
+
+[resource]
+script = ExtResource("1_zone")
+display_name = "Fortaleza"
+level = 5
+enemy_count = 6

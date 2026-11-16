@@ -104,6 +104,7 @@
   - El mapa se recorre por zonas representadas como nodos; se visitan para superar los desafíos de cada una.
   - [x] Primer paso (esqueleto): `scenes/Map.tscn` con 5 zonas de prueba conectadas, panel de información y botón "Entrar" que inicia el combate. Sin datos reales, desbloqueo ni estilos finales.
   - [x] Ciclo: `StartMenu` → `Map` → `Game` → `BattleResult` → `Map`. `PreBattle` queda fuera del ciclo por ahora (se conserva en disco).
+  - [x] Datos de zona: `zone_data.gd` (`ZoneData`) con nombre, nivel y cantidad provisional de enemigos; `scenes/zone_button.gd` permite asignar una zona a cada nodo del mapa. Zonas de prueba con datos: Bosque (nv. 1), Ruinas (nv. 3) y Fortaleza (nv. 5); Cueva y Costa siguen como placeholders sin datos.
   - [ ] **Ventana modal de zona.** Reemplazar el panel lateral de información por una ventana modal con la información de la zona y el botón "Entrar". Contenido y estilo a definir.
   - Tipos de desafío, orden y desbloqueo de zonas, y presentación pendientes de definir; sujeto a cambios.
 

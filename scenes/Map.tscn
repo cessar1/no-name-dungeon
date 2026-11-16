@@ -1,6 +1,10 @@
 [gd_scene format=3 uid="uid://62r462fvrgrk"]
 
-[ext_resource type="Script" path="res://scenes/map.gd" id="1_5hauk"]
+[ext_resource type="Script" uid="uid://dg7jwj7dfa55n" path="res://scenes/map.gd" id="1_5hauk"]
+[ext_resource type="Script" uid="uid://dcjv5vd1cfnpj" path="res://scenes/zone_button.gd" id="2_zbtn"]
+[ext_resource type="Resource" path="res://zones/bosque.tres" id="3_bosque"]
+[ext_resource type="Resource" path="res://zones/ruinas.tres" id="4_ruinas"]
+[ext_resource type="Resource" path="res://zones/fortaleza.tres" id="5_fortaleza"]
 
 [node name="Map" type="Control" unique_id=1127980766]
 layout_mode = 3
@@ -36,6 +40,8 @@ offset_top = 540.0
 offset_right = 264.0
 offset_bottom = 588.0
 text = "Bosque"
+script = ExtResource("2_zbtn")
+zone = ExtResource("3_bosque")
 
 [node name="Zone2" type="Button" parent="Zones" unique_id=1209989453]
 layout_mode = 0
@@ -44,6 +50,8 @@ offset_top = 400.0
 offset_right = 454.0
 offset_bottom = 448.0
 text = "Ruinas"
+script = ExtResource("2_zbtn")
+zone = ExtResource("4_ruinas")
 
 [node name="Zone3" type="Button" parent="Zones" unique_id=1100216559]
 layout_mode = 0
@@ -52,6 +60,7 @@ offset_top = 540.0
 offset_right = 644.0
 offset_bottom = 588.0
 text = "Cueva"
+script = ExtResource("2_zbtn")
 
 [node name="Zone4" type="Button" parent="Zones" unique_id=975790242]
 layout_mode = 0
@@ -60,6 +69,7 @@ offset_top = 400.0
 offset_right = 814.0
 offset_bottom = 448.0
 text = "Costa"
+script = ExtResource("2_zbtn")
 
 [node name="Zone5" type="Button" parent="Zones" unique_id=214503887]
 layout_mode = 0
@@ -68,6 +78,8 @@ offset_top = 540.0
 offset_right = 984.0
 offset_bottom = 588.0
 text = "Fortaleza"
+script = ExtResource("2_zbtn")
+zone = ExtResource("5_fortaleza")
 
 [node name="InfoPanel" type="Panel" parent="." unique_id=833041031]
 layout_mode = 0
